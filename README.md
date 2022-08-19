@@ -20,7 +20,7 @@ B_2["Video<br>StreoVision<br> in C++"]
 C_2["Video<br>StreoVision<br> in Python"]
 end
 
-subgraph G_2 ["Jetson Nano"]
+subgraph G_3 ["Jetson Nano"]
 B_3["Video<br>StreoVision<br> in C++"]
 C_3["Video<br>StreoVision<br> in Python"]
 end
