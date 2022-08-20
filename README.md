@@ -34,9 +34,13 @@ C_1 --> C_2 --> C_3
 ```
 
 ### 목표
-- [ ] : [목적을 이루기 위한 목표1]
-- [ ] : [목적을 이루기 위한 목표2]
-- [ ] : [목적을 이루기 위한 목표3]
+- [ ] : [StreoVision]
+- [ ] : [Image StreoVision in C++]
+- [ ] : [Image StreoVision in Python]
+- [ ] : [Video StreoVision in Raspberry-Pi C++]
+- [ ] : [Video StreoVision in Raspberry-Pi Python]
+- [ ] : [Video StreoVision in Jetson Nano C++]
+- [ ] : [Video StreoVision in Jetson Nano Python]
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
