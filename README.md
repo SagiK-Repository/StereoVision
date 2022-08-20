@@ -36,13 +36,13 @@ C_1 --> C_2 --> C_3
 ```
 
 ### 목표
-- [ ] : [StreoVision]
-- [ ] : [Image StreoVision in C++]
-- [ ] : [Image StreoVision in Python]
-- [ ] : [Video StreoVision in Raspberry-Pi C++]
-- [ ] : [Video StreoVision in Raspberry-Pi Python]
-- [ ] : [Video StreoVision in Jetson Nano C++]
-- [ ] : [Video StreoVision in Jetson Nano Python]
+- [ ] : [1. StreoVision]
+- [ ] : [2. Image StreoVision in C++]
+- [ ] : [3. Image StreoVision in Python]
+- [ ] : [4. Video StreoVision in Raspberry-Pi C++]
+- [ ] : [5. Video StreoVision in Raspberry-Pi Python]
+- [ ] : [6. Video StreoVision in Jetson Nano C++]
+- [ ] : [7. Video StreoVision in Jetson Nano Python]
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
