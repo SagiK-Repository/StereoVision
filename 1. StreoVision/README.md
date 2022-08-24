@@ -1,13 +1,13 @@
 문서정보 : 2022.08.20.~ 작성, 작성자 [@SAgiKPJH](https://github.com/SAgiKPJH)
 
 # 목차
-1. StreoVision?
-2. Streo Vision의 3차원 거리 정보 계산
-3. Streo Matching을 통한 Disparity Map 획득
+1. StereoVision?
+2. Stereo Vision의 3차원 거리 정보 계산
+3. Stereo Matching을 통한 Disparity Map 획득
 
 <br>
 
-# 1. StreoVision?
+# 1. StereoVision?
 
 <img src="https://user-images.githubusercontent.com/66783849/186354299-240ec4d0-d9a5-4f4b-b14c-e7b2769c9dca.png" width="68%">
 <img src="https://user-images.githubusercontent.com/66783849/186370580-bf780d61-7054-4819-8f2e-408443957b54.png" width="29%">
@@ -23,21 +23,21 @@ D["물체의 정보 획득 방법"]
 D --> A["3차원 정보"]
 D --> A_1["2차원 정보"]
 A --> B_1["비접촉식 방법"] & B_2["접촉식 방법"]
-B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지 투영법"] & C_4(("Streo Vision"))
+B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지 투영법"] & C_4(("Stereo Vision"))
 ```
 
 
 <br><br><br>
 
-# 2. Streo Vision의 3차원 거리 정보 계산
+# 2. Stereo Vision의 3차원 거리 정보 계산
 
 <br>
 
-### ◆ Streo Vision
+### ◆ Stereo Vision
 
- - Streo Vision 방법은 두 카메라를 물리적으로 정렬한 상태에서 삼각법을 이용하여 거리 정보를 획득한다.
+ - Stereo Vision 방법은 두 카메라를 물리적으로 정렬한 상태에서 삼각법을 이용하여 거리 정보를 획득한다.
  - 정확한 정렬이 불가능 하기 때문에 소프트웨어적인 처리를 통한 정렬 방법을 주로 사용한다.
- - StreoVision은 정확도는 조금 떨어지지만, 측정 범위가 크고 시스템 구성이 간단한 장점이 있다.
+ - StereoVision은 정확도는 조금 떨어지지만, 측정 범위가 크고 시스템 구성이 간단한 장점이 있다.
 
 <br>
 
@@ -49,7 +49,7 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
   <img src="https://user-images.githubusercontent.com/66783849/186361011-863e767b-4692-41c6-9d5d-1c1735c4d638.png" width="29%">
 - 카메라의 y값이 동일함을 가정한다. (보정이 필요한 경우 보정한다.)
 - b : Baseline, 두 카메라 중심간 x 거리
-- d : Disparity, 시차, Streo Matching을 통해 값을 획득한다.
+- d : Disparity, 시차, Stereo Matching을 통해 값을 획득한다.
 - f : Focal Length, 초점거리
 - z : Distance, 실제 3차원 거리
 
@@ -79,11 +79,11 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 
 <br><br><br>
 
-# 3. Streo Matching을 통한 Disparity Map 획득
+# 3. Stereo Matching을 통한 Disparity Map 획득
 
 <br>
 
-### ◆ 스테레오 정합 (Streo Matching)
+### ◆ 스테레오 정합 (Stereo Matching)
 
 <img src="https://user-images.githubusercontent.com/66783849/186373350-d72f1931-bbe4-485c-8430-7789da9595e6.png" width="69%">
 <img src="https://user-images.githubusercontent.com/66783849/186384386-81bc7014-d7f7-497b-be0a-f7c720328a95.png" width="69%">
@@ -91,7 +91,7 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 - 기존 영상에서의 한 점에 대한 동일한 점을 목표 영상에서 찾는 과정이다.
 - 이 점을 통해 시차(Disparity)를 얻을 수 있다.
 - Depth Map은 멀면 멀수록(시차가 적을수록) 0(검은색), 가까우면 가까울 수 록(시차가 클 수록) 255(흰색)를 나타낸다.
-- 스테레오 정합(Streo Matching)에는 다음과 같은 방법들이 존재한다.
+- 스테레오 정합(Stereo Matching)에는 다음과 같은 방법들이 존재한다.
   - 전역 정합(Global Matching) 방법
   - 지역 정합(Local Matching) 방법
     - SAD
@@ -129,17 +129,20 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 
 <img src="https://user-images.githubusercontent.com/66783849/186385165-f32f8b53-050c-4f11-9373-4dd4bf065548.png" width="69%">
 
-
+- 윈도우(window)를 기반으로 시차 탐색 볌우(disparity search range)내의 픽셀들에 대해 정합 비용(matching cost)를 계산한 후, 시차를 계산한다.
+- 정합비용(matching cost) : 윈도우들간의 비유사도(similarity) 값
+- 비유사도를 측정은 각 방법에 따라 다르다.
+- 계산된 정합 비용들 중에서 가장 적은 정합 비용을 가지는 시차를 선택한다. (이러한 방법을 'winner-takes-all' 이라함)
 
 
 ```mermaid
 flowchart LR
-subgraph ide1 [StreoVision]
+subgraph ide1 [StereoVision]
 direction LR
 LR_1["L 이미지 획득"] & LR_2["R 이미지 획득"] --> A_1
 A_1["이미지 보정"]
-A_1 --> A_2["Streo Vision 이미지 획득"]
-A_2 --> A_3["Streo Matching"] --"Disparity Map"--> A_5["거리측정"]
+A_1 --> A_2["Stereo Vision 이미지 획득"]
+A_2 --> A_3["Stereo Matching"] --"Disparity Map"--> A_5["거리측정"]
 end
 ```
 
@@ -148,7 +151,7 @@ end
  - 스트레오 비전의 3차원 거리 정보 계산 (수학)
 왼쪽 오른쪽 이미지 획득
 왼쪽 오른쪽 이미지 캘리브레이션
-스테레오 정합(StreoMatching)을 통한 Disparity Map 획득
+스테레오 정합(StereoMatching)을 통한 Disparity Map 획득
  - global matching, SSD, SAD
 거리 측정
 
@@ -163,8 +166,8 @@ end
   - 반도체 칩의 높이 측정을 위한 스테레오 비전의 측정값 조정 알고리즘
   - 스테레오 비전에서 거리 측정을 위한 다중 처리 기법
   - 스테레오비젼을 이용한 차량간 거리정보 검출
-- StreoVision의 3차원 거리 정보 계산
+- StereoVision의 3차원 거리 정보 계산
   - https://adioshun.gitbooks.io/gitbook_from_github/content/Image_Process_ch15.html
-- Streo Matching 방법
+- Stereo Matching 방법
   - https://m.blog.naver.com/PostView.naver?blogId=dldlsrb45&logNo=220879295400&targetKeyword=&targetRecommendationCode=1
 - 
