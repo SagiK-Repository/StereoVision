@@ -37,8 +37,8 @@ C_1 --> C_2 --> C_3
 
 ### 목표
 - [x] : [1. StereoVision](https://github.com/SagiK-Repository/StereoVision/tree/main/1.%20StereoVision)
-- [ ] : [2. Image StereoVision in C++]
-- [ ] : [3. Image StereoVision in Python]
+- [ ] : [2. Image StereoVision in PC C++](https://github.com/SagiK-Repository/StereoVision/tree/main/2%2C%203.%20Image%20StereoVision%20in%20PC%20C%2B%2B%20%26%20Python)
+- [ ] : [3. Image StereoVision in PC Python](https://github.com/SagiK-Repository/StereoVision/tree/main/2%2C%203.%20Image%20StereoVision%20in%20PC%20C%2B%2B%20%26%20Python)
 - [ ] : [4. Video StereoVision in Raspberry-Pi C++]
 - [ ] : [5. Video StereoVision in Raspberry-Pi Python]
 - [ ] : [6. Video StereoVision in Jetson Nano C++]
