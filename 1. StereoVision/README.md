@@ -4,6 +4,7 @@
 1. StereoVision?
 2. Stereo Vision의 3차원 거리 정보 계산
 3. Stereo Matching을 통한 Disparity Map 획득
+4. Stereo Vision 코드
 
 <br>
 
@@ -95,6 +96,8 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
   - 지역 정합(Local Matching) 방법
     - SAD
     - SSD
+- 다양한 비용 정합 방법이 존재한다. 논문 [Evaluation of Cost Functions for Stereo Matching
+  - A Taxonomy and Evaluation of Dense Two-Frame Stereo Correspondence Algorithms], [Evaluation of Cost Functions for Stereo Matching] 을 참고하여 원하는 비용 정합 방법을 얻자.
 
 <br>
 
@@ -168,9 +171,9 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 <img src="https://user-images.githubusercontent.com/66783849/186394146-99fe6b92-1ab1-4b00-89af-bc5ae7fb2cdd.png" width="80%">
 
 - Census transform은 잡음에 강하다는 특징이 있다.
-- 기준영상의 윈도우(=Census window)와 목표 영상의 윈도우들 내에 존재하는 중심 픽셀과 주변 픽셀의 값의 비교를 통해 '1' 혹은 '0'의 패턴을 생성한다.
-- 개별적으로 생성된 패턴은 1열의 벡터로 표현한다.
-- 기준 영상의 벡터와 목표 영상의 벡터들의 차이 정도를 정합 비용으로 사용한다.
+- 윈도우들 내에 존재하는 중심 픽셀과 주변 픽셀의 값의 비교를 통해 작으면 '1', 크면 '0'의 패턴을 생성한다.
+- 개별적으로 생성된 윈도우 패턴을 1열의 벡터로 표현한다.
+- 기준 영상의 벡터와 목표 영상의 벡터들의 차이 정도(개수)를 정합 비용으로 사용한다.
 - Census matching cost는 두 벡터의 XOR연산 결과 1의 개수로 한다.
 
 <br>
@@ -179,34 +182,91 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 
 <img src="https://user-images.githubusercontent.com/66783849/186395259-64078f72-effe-4926-94f6-444cc65bb83a.png" width="69%">
 
+- 모든 픽셀에 대해서 Census transform을 진행하여 1차 정합비용을 window center 픽셀에 저장한다.
+- 이후 윈도우별로 SAD를 통해 최종 정합 비용을 산출한다.
 
 
+<br><br><br>
 
+# 4. StereoVision 코드
 
+- 실시간 컴퓨터 비전 프로그래밍 라이브러리인 OpenCV의 StereoBM을 활용하여 C++, Python 코드를 만들어보았다.
 
-```mermaid
-flowchart LR
-subgraph ide1 [StereoVision]
-direction LR
-LR_1["L 이미지 획득"] & LR_2["R 이미지 획득"] --> A_1
-A_1["이미지 보정"]
-A_1 --> A_2["Stereo Vision 이미지 획득"]
-A_2 --> A_3["Stereo Matching"] --"Disparity Map"--> A_5["거리측정"]
-end
+<br>
+
+### ◆ C++
+
+```cpp
+// StereoBM or StereoSGBM 을 활용하기 위한 헤더 선언
+#include "opencv2/core/core.hpp"
+#include "opencv2/calib3d/calib3d.hpp"
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include "opencv2/contrib/contrib.hpp"
+#include <stdio.h>
+
+using namespace cv;
+using namespace std;
+
+Mat img1, img2, g1, g2;
+Mat disp, disp8, disp8_;
+
+img1 = imread("leftImage.jpg");
+img2 = imread("rightImage.jpg");
+
+cvtColor(img1, g1, CV_BGR2GRAY);
+cvtColor(img2, g2, CV_BGR2GRAY);
+
+StereoBM sbm;
+sbm.state->SADWindowSize = 9;
+sbm.state->numberOfDisparities = 112;
+sbm.state->preFilterSize = 5;
+sbm.state->preFilterCap = 61;
+sbm.state->minDisparity = -39;
+sbm.state->textureThreshold = 507;
+sbm.state->uniquenessRatio = 0;
+sbm.state->speckleWindowSize = 0;
+sbm.state->speckleRange = 8;
+sbm.state->disp12MaxDiff = 1;
+sbm(g1, g2, disp);
+normalize(disp, disp8_, 0, 255, CV_MINMAX, CV_8U);
+
+StereoSGBM sgbm;
+sgbm.SADWindowSize = 5;
+sgbm.numberOfDisparities = 192;
+sgbm.preFilterCap = 4;
+sgbm.minDisparity = -64;
+sgbm.uniquenessRatio = 1;
+sgbm.speckleWindowSize = 150;
+sgbm.speckleRange = 2;
+sgbm.disp12MaxDiff = 10;
+sgbm.fullDP = false;
+sgbm.P1 = 600;
+sgbm.P2 = 2400;
+sgbm(g1, g2, disp);
+normalize(disp, disp8, 0, 255, CV_MINMAX, CV_8U);
+
+imshow("left", img1);
+imshow("right", img2);
+imshow("disp-SGBM", disp8);
+imshow("disp-SBM", disp8_);
 ```
 
-스트레오비전
-스트레오 비전이란?
- - 스트레오 비전의 3차원 거리 정보 계산 (수학)
-왼쪽 오른쪽 이미지 획득
-왼쪽 오른쪽 이미지 캘리브레이션
-스테레오 정합(StereoMatching)을 통한 Disparity Map 획득
- - global matching, SSD, SAD
-거리 측정
+### ◆ Python
 
+```python
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
 
-### ◆ 소제목
- - 내용
+imgL = cv2.imread('tsukuba_l.png',0)
+imgR = cv2.imread('tsukuba_r.png',0)
+
+stereo = cv2.StereoBM_create(numDisparities=16, blockSize=15)
+disparity = stereo.compute(imgL,imgR)
+plt.imshow(disparity,'gray')
+plt.show()
+```
 
 ## 참고
 
@@ -219,4 +279,6 @@ end
   - https://adioshun.gitbooks.io/gitbook_from_github/content/Image_Process_ch15.html
 - Stereo Matching 방법
   - https://m.blog.naver.com/PostView.naver?blogId=dldlsrb45&logNo=220879295400&targetKeyword=&targetRecommendationCode=1
-- 
+- Steroe Vision 비용 방법 비교 논문
+  - Evaluation of Cost Functions for Stereo Matching
+  - A Taxonomy and Evaluation of Dense Two-Frame Stereo Correspondence Algorithms
