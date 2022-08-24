@@ -83,13 +83,53 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 
 <br>
 
-### ◆ 스테레오 정합 (Stereo Matching)
+### ◆ 스테레오 정합 (Streo Matching)
 
 <img src="https://user-images.githubusercontent.com/66783849/186373350-d72f1931-bbe4-485c-8430-7789da9595e6.png" width="69%">
+<img src="https://user-images.githubusercontent.com/66783849/186384386-81bc7014-d7f7-497b-be0a-f7c720328a95.png" width="69%">
 
 - 기존 영상에서의 한 점에 대한 동일한 점을 목표 영상에서 찾는 과정이다.
 - 이 점을 통해 시차(Disparity)를 얻을 수 있다.
 - Depth Map은 멀면 멀수록(시차가 적을수록) 0(검은색), 가까우면 가까울 수 록(시차가 클 수록) 255(흰색)를 나타낸다.
+- 스테레오 정합(Streo Matching)에는 다음과 같은 방법들이 존재한다.
+  - 전역 정합(Global Matching) 방법
+  - 지역 정합(Local Matching) 방법
+    - SAD
+    - SSD
+
+<br>
+
+### ◆ 전역 정합(Global Matching) 방법
+
+- 에너지 함수(energy function)을 기반으로 깊이 영상을 추출한다.
+- 영상의 일정 부분이 아니라 영상의 전체적인 정보를 사용한다.
+- 알고리즘이 복잡하다는 단점이 존재하지만, 매우 정확한 깊이 영상을 추출 가능하다는 장점이 있다.
+- 종류: Belief propagation, dynamic programming, semi-global matching, graph-cut 등이 있다. 일반적으로 Semi-global matching이 주로 사용 된다.
+- 하드웨어 최적화를 위해 간략화(Approximation)를 한다. (4,8 방향의 Semi-global matching, Dynamic programming 등)
+
+
+<br>
+
+### ◆ 지역 정합(Local Matching) 방법
+
+ - 특징 기반(feature-based) 정합 방법과 영역 기반(area-based) 정합 방법으로 나뉜다.
+ - 특징 기반 정합 : 특징점을 기반으로 정합점(matching point)를 찾는다. 최근에는 사용하지 않는다.
+ - 영역 기반 정합
+   - 일정 영역(=윈도우, window)의 픽셀 정보들을 이용하여 정합점을 찾는다.
+   - 전역 정합 방법에 비해 상대적으로 부정확한 깊이 영상을 출력하지만, 알고리즘이 단순하고 빠르게 계산할 수 있다.
+   - 종류: SAD(Sum of absolute difference), SSD(Sum of squared difference), NCC(normalized cross correlation), Census transform, Rank transform 등
+ - 상대적으로 낮은 정확도를 가지기 때문에, 다양한 후처리(post-processing) 알고리즘을 사용하여 정확도를 높이거나 종합(aggregation) 방법을 통해 정확도를 높이기도 한다.
+ - 후처리 알고리즘: Left-right consistency check(대표적으로 많이 씀), confidence check, median filter, weighted median filter(대표적으로 많이 씀), propagation 등
+ - 종합 방법: Adaptive support weight, cross-based adaptive support weight 등
+
+
+<br>
+
+#### ◆ 지역 정합(Local Matching) 방법의 계산 방법
+
+<img src="https://user-images.githubusercontent.com/66783849/186385165-f32f8b53-050c-4f11-9373-4dd4bf065548.png" width="69%">
+
+
 
 
 ```mermaid
@@ -125,4 +165,6 @@ end
   - 스테레오비젼을 이용한 차량간 거리정보 검출
 - StreoVision의 3차원 거리 정보 계산
   - https://adioshun.gitbooks.io/gitbook_from_github/content/Image_Process_ch15.html
-  - 
+- Streo Matching 방법
+  - https://m.blog.naver.com/PostView.naver?blogId=dldlsrb45&logNo=220879295400&targetKeyword=&targetRecommendationCode=1
+- 
