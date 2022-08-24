@@ -50,16 +50,26 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 - d : Disparity, 
 - f : Focal Length, 초점거리
 - z : Distance, 실제 3차원 거리
-- 위 그림에 의하면 다음과 같은 비율이 나온다.
+- 위 그림에 의하면 다음과 같은 비율이 나온다.  
+  
   $$ x_l : f = \left( x + \frac{b}{2} \right) : z $$
+
   $$ x_r : f = \left( x - \frac{b}{2} \right) : z $$
-- 이 식을 아래 식 으로 변형한다.
+  
+- 이 식을 아래 식 으로 변형한다.  
+  
   $$ x_l z = f  \left( x + \frac{b}{2} \right) $$
+  
   $$ x_r z = f  \left( x - \frac{b}{2} \right) $$
-- 두 식을 합하면 아래와 같이 된다.
+
+- 두 식을 합하면 아래와 같이 된다.  
+  
   $$ x_r z + x_l z = f  \left( x + \frac{b}{2} \right) + f  \left( x - \frac{b}{2} \right) $$
+
   $$  z \left( x_r + x_l \right) = f b $$
+  
   $$  z = \frac{ f b }{\left( x_r + x_l \right)} $$
+  
   $$  z = \frac{ f b }{ d } $$
 
 
