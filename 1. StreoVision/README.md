@@ -50,6 +50,8 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 - d : Disparity, 
 - f : Focal Length, 초점거리
 - z : Distance, 실제 3차원 거리
+
+#### 수학식 풀이과정 
 - 위 그림에 의하면 다음과 같은 비율이 나온다.  
   
   $$ x_l : f = \left( x + \frac{b}{2} \right) : z $$
