@@ -9,7 +9,7 @@
 
 # 1. StreoVision?
 
-<img src="https://user-images.githubusercontent.com/66783849/186354299-240ec4d0-d9a5-4f4b-b14c-e7b2769c9dca.png" width="59%">
+<img src="https://user-images.githubusercontent.com/66783849/186354299-240ec4d0-d9a5-4f4b-b14c-e7b2769c9dca.png" width="69%">
 <img src="https://user-images.githubusercontent.com/66783849/186370580-bf780d61-7054-4819-8f2e-408443957b54.png" width="39%">
 
  - 사람은 두 눈으로부터 좌/우 차이가 존재하는 2차원의 영상을 입력받고, 입력 받은 영상을 인간의 뇌로 부터 융합되는 과정을 통해3차원의 거리 감을 인지한다.
