@@ -85,8 +85,7 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 
 ### ◆ 스테레오 정합 (Stereo Matching)
 
-<img src="https://user-images.githubusercontent.com/66783849/186373350-d72f1931-bbe4-485c-8430-7789da9595e6.png" width="69%">
-<img src="https://user-images.githubusercontent.com/66783849/186384386-81bc7014-d7f7-497b-be0a-f7c720328a95.png" width="69%">
+<img src="https://user-images.githubusercontent.com/66783849/186373350-d72f1931-bbe4-485c-8430-7789da9595e6.png" width="69%"> <img src="https://user-images.githubusercontent.com/66783849/186384386-81bc7014-d7f7-497b-be0a-f7c720328a95.png" width="69%">
 
 - 기존 영상에서의 한 점에 대한 동일한 점을 목표 영상에서 찾는 과정이다.
 - 이 점을 통해 시차(Disparity)를 얻을 수 있다.
@@ -133,6 +132,16 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 - 정합비용(matching cost) : 윈도우들간의 비유사도(similarity) 값
 - 비유사도를 측정은 각 방법에 따라 다르다.
 - 계산된 정합 비용들 중에서 가장 적은 정합 비용을 가지는 시차를 선택한다. (이러한 방법을 'winner-takes-all' 이라함)
+
+
+
+
+<br>
+
+#### ◆ 지역 정합 방법 - 영역 기반 정합 방법
+
+- 영역 기반 정합 방법은 윈도우 간의 상관도(= 정합 비용, 비유사도)를 기반으로 시차를 계산하는 방법이다.
+- SAD(Sum of Absolute difference), SSD(Sum of squared difference), Census transform과 rank transform에 대해서 자세히 안다.
 
 
 ```mermaid
