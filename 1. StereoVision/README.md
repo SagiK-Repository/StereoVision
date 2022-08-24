@@ -138,10 +138,50 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 
 <br>
 
-#### ◆ 지역 정합 방법 - 영역 기반 정합 방법
+## 지역 정합 방법 - 영역 기반 정합 방법
 
 - 영역 기반 정합 방법은 윈도우 간의 상관도(= 정합 비용, 비유사도)를 기반으로 시차를 계산하는 방법이다.
 - SAD(Sum of Absolute difference), SSD(Sum of squared difference), Census transform과 rank transform에 대해서 자세히 안다.
+
+<br>
+
+### ◆ SAD(Sum of Absolute difference)
+
+<img src="https://user-images.githubusercontent.com/66783849/186392885-c8360ada-b07a-414a-9f33-72d97f0130f8.png" width="69%">
+
+- 좌/우 윈도우 내 존재하는 픽셀들의 값의 차이에 절대값을 취한 후, 합산하여 정합 비용을 계산한다.
+- SAD matching cost는 윈도우 내 픽셀 값들을 더한다.
+
+<br>
+
+### ◆ SSD(Sum of Squared Difference) 
+
+<img src="https://user-images.githubusercontent.com/66783849/186393390-540cd4f9-8d6a-4753-8bd2-7e28e0cc5780.png" width="69%">
+
+- 좌/우 윈도우 내 존재하는 픽셀들의 값의 차이에 제곱한 후, 합산하여 정합 비용을 계산한다.
+- SSD matching cost는 윈도우 내 픽셀 값들을 더한다.
+
+<br>
+
+### ◆ Census transform
+
+<img src="https://user-images.githubusercontent.com/66783849/186394146-99fe6b92-1ab1-4b00-89af-bc5ae7fb2cdd.png" width="80%">
+
+- Census transform은 잡음에 강하다는 특징이 있다.
+- 기준영상의 윈도우(=Census window)와 목표 영상의 윈도우들 내에 존재하는 중심 픽셀과 주변 픽셀의 값의 비교를 통해 '1' 혹은 '0'의 패턴을 생성한다.
+- 개별적으로 생성된 패턴은 1열의 벡터로 표현한다.
+- 기준 영상의 벡터와 목표 영상의 벡터들의 차이 정도를 정합 비용으로 사용한다.
+- Census matching cost는 두 벡터의 XOR연산 결과 1의 개수로 한다.
+
+<br>
+
+### ◆ Rank transform
+
+<img src="https://user-images.githubusercontent.com/66783849/186395259-64078f72-effe-4926-94f6-444cc65bb83a.png" width="69%">
+
+
+
+
 
 
 ```mermaid
