@@ -44,6 +44,7 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 - 동일한 물체에 대한 두 장의 사진 사이에서 나타나는 차이점을 이용하면 이미지 중에서 어느 부분이 카메라를 기준으로 더 가까운지를 알아낼 수 있다.
 - 이를 이미지나 거리값으로 계산한 결과를 거리 정보라고 합니다.
   <img src="https://user-images.githubusercontent.com/66783849/186359658-77e3d354-0dc9-4df6-a424-5084bd5164ac.png" width="70%">
+  <img src="https://user-images.githubusercontent.com/66783849/186361011-863e767b-4692-41c6-9d5d-1c1735c4d638.png" width="70%">
 - 카메라의 y값이 동일함을 가정한다. (보정이 필요한 경우 보정한다.)
 - 
 
@@ -84,3 +85,6 @@ end
   - 반도체 칩의 높이 측정을 위한 스테레오 비전의 측정값 조정 알고리즘
   - 스테레오 비전에서 거리 측정을 위한 다중 처리 기법
   - 스테레오비젼을 이용한 차량간 거리정보 검출
+- StreoVision의 3차원 거리 정보 계산
+  - https://adioshun.gitbooks.io/gitbook_from_github/content/Image_Process_ch15.html
+  - 
