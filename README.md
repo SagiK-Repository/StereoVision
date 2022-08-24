@@ -1,10 +1,10 @@
 문서정보 : 2022.08.19.~ 작성, 작성자 [@SAgiKPJH](https://github.com/SAgiKPJH)
 
-# SteroVision
-StreoVision, Streo Vision
+# StereoVision
+StereoVision, Stereo Vision
 
 ### 목적
-- StreoVision을 하는데 그 목적이 있다.
+- StereoVision을 하는데 그 목적이 있다.
 
 ### 예상 과정
 
