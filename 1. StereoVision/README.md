@@ -1,4 +1,4 @@
-문서정보 : 2022.08.20.~ 작성, 작성자 [@SAgiKPJH](https://github.com/SAgiKPJH)
+문서정보 : 2022.08.20.~24. 작성, 작성자 [@SAgiKPJH](https://github.com/SAgiKPJH)
 
 # 목차
 1. [StereoVision?](https://github.com/SagiK-Repository/StereoVision/tree/main/1.%20StereoVision#1-stereovision)
