@@ -23,7 +23,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 # 2. OpenCV
 
-<img src="https://user-images.githubusercontent.com/66783849/186481810-4badd25d-bb67-4d26-b6ef-c74ecba02e5c.png" width="29%">
+<img src="https://user-images.githubusercontent.com/66783849/186481810-4badd25d-bb67-4d26-b6ef-c74ecba02e5c.png" width="19%">
 
 - OpenCV(Open Source Computer Vision)은 실시간 컴퓨터 비전을 목적으로한 프로그래밍 라이브러리이다.
 - C++와 Python에서 연동 사용 가능하다.
@@ -36,12 +36,13 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 1. OpenCV 설치 후 MFC 빈프로젝트 제작 (글쓴이의 경우 OpenCV 4.5.3v 사용)
 2. x64 Debug 또는 Release 모드, 두 가지 각각 opencv_world453d.lib 또는 opencv_world453.lib 다르게 속성 설정 진행한다.
 3. 프로젝트 속성 설정 (<kbd>Alt</kbd>+<kbd>Enter</kbd>)  
-   구성관리자 | 64비트를 선택한다
+   프로젝트 속성 | 기입내용
    :--: | :--
+   구성관리자 | 64비트를 선택한다
    VC++->포함 디렉터리 | C:\opencv453\build\include
    라이브러리 디렉터리 | C:\opencv453\build\x64\vc15\lib
-   링커->입력->추가종속성 | opencv_world453d.lib
-   디버깅->환경 | PATH=%PATH%;C:\opencv453\build\x64\vc15\bin
+   링커->입력->추가종속성 | opencv_world453d.lib or opencv_world453.lib
+   디버깅->환경 | PATH=C:\opencv453\build\x64\vc15\bin;%PATH%
 
 
 <br>
