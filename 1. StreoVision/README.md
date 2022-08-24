@@ -46,10 +46,21 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
   <img src="https://user-images.githubusercontent.com/66783849/186359658-77e3d354-0dc9-4df6-a424-5084bd5164ac.png" width="69%">
   <img src="https://user-images.githubusercontent.com/66783849/186361011-863e767b-4692-41c6-9d5d-1c1735c4d638.png" width="29%">
 - 카메라의 y값이 동일함을 가정한다. (보정이 필요한 경우 보정한다.)
-- 
-
-
-
+- b : Baseline, 두 카메라 중심간 x 거리
+- d : Disparity, 
+- f : Focal Length, 초점거리
+- z : Distance, 실제 3차원 거리
+- 위 그림에 의하면 다음과 같은 비율이 나온다.
+  $$ x_l : f = \left( x + \frac{b}{2} \right) : z $$
+  $$ x_r : f = \left( x - \frac{b}{2} \right) : z $$
+- 이 식을 아래 식 으로 변형한다.
+  $$ x_l z = f  \left( x + \frac{b}{2} \right) $$
+  $$ x_r z = f  \left( x - \frac{b}{2} \right) $$
+- 두 식을 합하면 아래와 같이 된다.
+  $$ x_r z + x_l z = f  \left( x + \frac{b}{2} \right) + f  \left( x - \frac{b}{2} \right) $$
+  $$  z \left( x_r + x_l \right) = f b $$
+  $$  z = \frac{ f b }{\left( x_r + x_l \right)} $$
+  $$  z = \frac{ f b }{ d } $$
 
 
 
