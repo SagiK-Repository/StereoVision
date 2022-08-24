@@ -2,11 +2,8 @@
 
 # 목차
 1. StreoVision?
-2. StreoVision 이미지 획득
-3. 이미지 보정
-4. Streo Matching을 통한 Disparity Map 획득
-5. 거리측정
-6. StreoVision 결과 확인
+2. Streo Vision의 3차원 거리 정보 계산
+3. Streo Matching을 통한 Disparity Map 획득
 
 <br>
 
@@ -28,6 +25,11 @@ A --> B_1["비접촉식 방법"] & B_2["접촉식 방법"]
 B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지 투영법"] & C_4(("Streo Vision"))
 ```
 
+
+<br><br><br>
+
+# 2. Streo Vision의 3차원 거리 정보 계산
+
 <br>
 
 ### ◆ Streo Vision
@@ -36,18 +38,17 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
  - 정확한 정렬이 불가능 하기 때문에 소프트웨어적인 처리를 통한 정렬 방법을 주로 사용한다.
  - StreoVision은 정확도는 조금 떨어지지만, 측정 범위가 크고 시스템 구성이 간단한 장점이 있다.
 
-
 <br>
 
-### ◆ Streo Vision의 3차원 거리 정보 계산
+### ◆ 3차원 거리 정보 계산
 
 - 동일한 물체에 대한 두 장의 사진 사이에서 나타나는 차이점을 이용하면 이미지 중에서 어느 부분이 카메라를 기준으로 더 가까운지를 알아낼 수 있다.
-- 이를 이미지나 거리값으로 계산한 결과를 거리 정보라고 합니다.
+- 이를 통해 3차원의 거리 정보( $z$ )를 계산한다.
   <img src="https://user-images.githubusercontent.com/66783849/186359658-77e3d354-0dc9-4df6-a424-5084bd5164ac.png" width="69%">
   <img src="https://user-images.githubusercontent.com/66783849/186361011-863e767b-4692-41c6-9d5d-1c1735c4d638.png" width="29%">
 - 카메라의 y값이 동일함을 가정한다. (보정이 필요한 경우 보정한다.)
 - b : Baseline, 두 카메라 중심간 x 거리
-- d : Disparity, 
+- d : Disparity, 시차, Streo Matching을 통해 값을 획득한다.
 - f : Focal Length, 초점거리
 - z : Distance, 실제 3차원 거리
 
