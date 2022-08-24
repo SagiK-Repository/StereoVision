@@ -282,3 +282,6 @@ plt.show()
 - Steroe Vision 비용 방법 비교 논문
   - Evaluation of Cost Functions for Stereo Matching
   - A Taxonomy and Evaluation of Dense Two-Frame Stereo Correspondence Algorithms
+- Stereo Vision 코드
+  - https://adioshun.gitbooks.io/gitbook_from_github/content/Image_Process_ch15.html
+  - https://eehoeskrap.tistory.com/103
