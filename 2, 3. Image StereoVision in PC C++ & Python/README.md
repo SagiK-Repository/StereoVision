@@ -15,7 +15,7 @@
 Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에서 StereoVision을 진행하는 것이 목표이다.  
 이를 위한 PC 환경은 다음과 같다.  
 - PC C++ 환경 : Windows10 - Visual Studio 2022
-- PC Python 환경 : Windows10 - Anaconda - Jupyter (Python 3.8.8v), Google Colab (Python 3.7.13v)
+- PC Python 환경 : Windows10 - Anaconda3 - Jupyter (Python 3.8.8v), Google Colab (Python 3.7.13v)
 - 두 환경 공통적으로 OpenCV 라이브러리를 활용한다.
 
 
@@ -43,11 +43,30 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
    라이브러리 디렉터리 | C:\opencv453\build\x64\vc15\lib
    링커->입력->추가종속성 | opencv_world453d.lib or opencv_world453.lib
    디버깅->환경 | PATH=C:\opencv453\build\x64\vc15\bin;%PATH%
-
+4. 아래 내용을 cpp 코딩 또는 헤더에 넣고 디버깅되면 사용준비 끝이다.  
+   ```cpp
+   #include <opencv2/opencv.hpp>
+   using namespace cv; 
+   using namespace std;
+   ```
 
 <br>
 
 ### ◆ Python에서의 연동 방법
+
+- 기본적으로 Anaconda3에는 OpenCV가 깔려있다. (글쓴이의 경우 Jupyter - OpenCV 4.5.4v, Colab - OpenCV 4.6.0v 사용)
+- OpenCV 버전 확인은 다음과 같이 한다. `print(cv2.__version__)`
+- OpenCV를 설치할 경우 다음과 같이 cmd에 입력한다. `python -m pip install opencv-python` (Jupyter, Colab에 입력할 경우 맨 앞에 '!'를 붙인다.)
+- 아래 코드를 작성하여 정상 작동하여 사용준비를 마무리한다.
+  ```python
+  import cv2
+  
+  image = cv2.imread("1.jpg",cv2.IMREAD_COLOR)
+  cv2.imshow("TEST",image)
+  cv2.waitKey(0)
+  cv2.destroyAllWindows()
+  ```
+
 
 
 
