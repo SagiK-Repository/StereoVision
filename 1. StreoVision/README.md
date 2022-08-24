@@ -9,7 +9,7 @@
 
 # 1. StreoVision?
 
-<img src="https://user-images.githubusercontent.com/66783849/186354299-240ec4d0-d9a5-4f4b-b14c-e7b2769c9dca.png" width="69%">
+<img src="https://user-images.githubusercontent.com/66783849/186354299-240ec4d0-d9a5-4f4b-b14c-e7b2769c9dca.png" width="68%">
 <img src="https://user-images.githubusercontent.com/66783849/186370580-bf780d61-7054-4819-8f2e-408443957b54.png" width="29%">
 
  - 사람은 두 눈으로부터 좌/우 차이가 존재하는 2차원의 영상을 입력받고, 입력 받은 영상을 인간의 뇌로 부터 융합되는 과정을 통해3차원의 거리 감을 인지한다.
@@ -53,7 +53,7 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
 - f : Focal Length, 초점거리
 - z : Distance, 실제 3차원 거리
 
-#### 수학식 풀이과정 
+#### ◆ 수학식 풀이과정 
 - 위 그림에 의하면 다음과 같은 비율이 나온다.  
   
   $$ x_l : f = \left( x + \frac{b}{2} \right) : z $$
@@ -77,6 +77,19 @@ B_1 --> C_1["레이저 삼각법"] & C_2["공초점 현미경"] & C_3["프린지
   $$  z = \frac{ f b }{ d } $$
 
 
+<br><br><br>
+
+# 3. Streo Matching을 통한 Disparity Map 획득
+
+<br>
+
+### ◆ 스테레오 정합 (Stereo Matching)
+
+<img src="https://user-images.githubusercontent.com/66783849/186373350-d72f1931-bbe4-485c-8430-7789da9595e6.png" width="69%">
+
+- 기존 영상에서의 한 점에 대한 동일한 점을 목표 영상에서 찾는 과정이다.
+- 이 점을 통해 시차(Disparity)를 얻을 수 있다.
+- Depth Map은 멀면 멀수록(시차가 적을수록) 0(검은색), 가까우면 가까울 수 록(시차가 클 수록) 255(흰색)를 나타낸다.
 
 
 ```mermaid
