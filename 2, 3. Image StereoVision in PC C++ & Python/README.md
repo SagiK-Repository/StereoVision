@@ -85,7 +85,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 # 4. StereoVision in PC C++
 
 - [2. OpenCV] 항목을 참고하여 Visual Studio에 OpenCV를 연동한다.
-  - Visual Studio 2019 시작 > `새 프로젝트 만들기` > "빈 프로젝트" > 프로젝트 명 지정 후 생성
+  - Visual Studio 시작 > `새 프로젝트 만들기` > "빈 프로젝트" > 프로젝트 명 지정 후 생성
   - 이후 OpenCV 항목을 참고
 - Stereo Vision을 위한 과정은 다음과 같다.
   - 이미지 로딩 및 출력
