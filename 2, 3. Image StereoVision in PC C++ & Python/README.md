@@ -90,8 +90,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - Stereo Vision을 위한 과정은 다음과 같다.
   - 이미지 로딩 및 출력
   - sbm, sgbm
-  - Rank, Census
-  - HMI-SGM, Layered stereo, Belief prop, GC+occl
+  - Census, HMI-SGM
+  - Layered stereo, Belief prop, GC+occl
   - 결과
 
 <br>
@@ -290,12 +290,22 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
    StereoBM은 75ms,  
    StereoSGBM은 1323ms가 나왔다.  
 
+
+<br>
+
+
+### ◆ Census Transform, HMI-SGM (  - Layered stereo, Belief prop, GC+occl)
+
+<br><br><br>
+
+# 4. StereoVision in PC Python
+
+
+
 ## 참고
 
 - OpenCV
   - https://ko.wikipedia.org/wiki/OpenCV
-
-
 - Stereo Vision
   - http://mccormickml.com/2014/01/10/stereo-vision-tutorial-part-i/
 - Stereo Matching 방법
@@ -311,5 +321,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   - https://docs.opencv.org/3.1.0/d3/d14/tutorial_ximgproc_disparity_filtering.html
   - https://makepluscode.tistory.com/105
   - https://leechamin.tistory.com/362
-- Steteo Vision Image DataSource 제공
+- Stereo Vision Image DataSource 제공
   - https://vision.middlebury.edu/stereo/data/
+- Stereo Vision Census Transform
+  - https://docs.opencv.org/4.x/d2/d7f/namespacecv_1_1stereo.html
