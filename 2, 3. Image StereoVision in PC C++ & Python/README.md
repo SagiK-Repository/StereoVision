@@ -14,7 +14,7 @@
 
 Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에서 StereoVision을 진행하는 것이 목표이다.  
 이를 위한 PC 환경은 다음과 같다.  
-- PC C++ 환경 : Windows10 - Visual Studio 2022
+- PC C++ 환경 : Windows10 - Visual Studio
 - PC Python 환경 : Windows10 - Anaconda3 - Jupyter (Python 3.8.8v), Google Colab (Python 3.7.13v)
 - 두 환경 공통적으로 OpenCV 라이브러리를 활용한다.
 
@@ -31,7 +31,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 <br>
 
-### ◆ Visual Studio 2022 C++에서의 연동 방법
+### ◆ Visual Studio C++에서의 연동 방법
 
 1. OpenCV 설치 후 MFC 빈프로젝트 제작 (글쓴이의 경우 OpenCV 4.5.3v 사용)
 2. x64 Debug 또는 Release 모드, 두 가지 각각 opencv_world453d.lib 또는 opencv_world453.lib 다르게 속성 설정 진행한다.
