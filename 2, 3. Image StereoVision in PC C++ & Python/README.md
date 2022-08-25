@@ -124,12 +124,18 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 <br>
 
 ### ◆ StereoBM, StereoSGBM
+
+<img src="https://user-images.githubusercontent.com/66783849/186613743-e4d71935-a849-457a-8837-a199ebd1e031.png" width="69%">
+
+- 사진의 위에 5개는 StereoBM, 아래 5개는 StereoSGBM이다.
 - StereoBM과 StereoSGBM은 각각 OpenCV에서 제공하는 전역 정합(Global Matching) 방법이랑, 지역 정합(Local Matching) 방법이다.
-- 간단한 StereoBM 기능을 활용한 StereoVision 코드를 구성한다.
+- StereoBM 기능을 활용한 StereoVision 코드를 구성한다.
   ```cpp
   int BMndisparities = 16 * 4;
-	int BMblocksize = 17; //홀수
-
+  int BMblocksize = 17; //홀수
+	int BMdisp12MaxDiff = 25;
+	int BMuniquenessRatio = 0;
+	int BMtextureThreshold = 25;
   for (int i = a; i < image_names.size(); i += 2) {
 
 		cout << image_names[i] << " Streovision BM" << endl;
@@ -137,6 +143,17 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 		clock_t startTime, endTime; endTime = clock();
 
 		cv::Ptr<cv::StereoBM> stereo = cv::StereoBM::create(BMndisparities, BMblocksize);
+    stereo->setNumDisparities(BMndisparities);
+		stereo->setBlockSize(BMblocksize);
+		stereo->setPreFilterType(1);
+		stereo->setPreFilterSize(1 * 2 + 5);
+		stereo->setPreFilterCap(31);
+		stereo->setTextureThreshold(BMtextureThreshold);
+		stereo->setUniquenessRatio(0);
+		stereo->setSpeckleRange(0);
+		stereo->setSpeckleWindowSize(0 * 2);
+		stereo->setDisp12MaxDiff(BMdisp12MaxDiff); // 틈
+		stereo->setMinDisparity(BMuniquenessRatio);
 
 		startTime = clock();
 		stereo->compute(images[i], images[i + 1], StereoVision_Result_image);
@@ -155,6 +172,10 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   ```
 - 마찬가지로 StereoSGBM도 마찬가지이다.
   ```cpp
+  int SGBMndisparities = 16 * 4;
+	int SGBMblocksize = 17;
+	int SGBMdisp12MaxDiff = 25;
+	int SGBMuniquenessRatio = 0;
   for (int i = a; i < image_names.size(); i += 2) {
 
 		cout << image_names[i] << " Streovision SGBM" << endl;
@@ -184,7 +205,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 	}
   ```
-- OpenCV의 Track 기능을 활용하여 실시간으로 요소를 변경하면서 확인할 수 있도록 한다.
+- OpenCV의 Track 기능을 활용하여 실시간으로 요소를 변경하면서 확인할 수 있도록 한다.  
+  <img src="https://user-images.githubusercontent.com/66783849/186610378-fa867f8c-787a-4017-a412-6495bbf39549.png" width="69%">  
   ```cpp
   cv::Ptr<cv::StereoBM> stereot0 = cv::StereoBM::create();
   
@@ -220,7 +242,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   //...//
   // main문 내부//
   //...//
-  
+
   cout << "ESC Key to Next" << endl;
 
 	Mat StereoVision_Result_image;
@@ -255,6 +277,11 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   }
   ```
 
+<br>
+
+#### ◆ StereoBM, StereoSGBM 결과
+ - 이미지크기 450*375를 기준으로, StereoBM은 평균 4ms, StereoSGBM은 평균 30.6ms가 나왔다.
+ - 이미지크기 1024*1454를 기준으로, StereoBM은 75ms, StereoSGBM은 1323ms가 나왔다.
 
 ## 참고
 
@@ -271,6 +298,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - Stereo Vision 코드
   - https://adioshun.gitbooks.io/gitbook_from_github/content/Image_Process_ch15.html
   - https://eehoeskrap.tistory.com/103
+- StereoBM 코드
+  - https://learnopencv.com/depth-perception-using-stereo-camera-python-c/
 - Steteo Vision Image DataSource 제공
   - https://vision.middlebury.edu/stereo/data/
   - 
