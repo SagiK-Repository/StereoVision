@@ -218,6 +218,14 @@ img2 = imread("rightImage.jpg");
 cvtColor(img1, g1, CV_BGR2GRAY);
 cvtColor(img2, g2, CV_BGR2GRAY);
 
+// StereoBM 1
+int ndisparities = 16;
+int blocksize = 21;
+cv::Ptr<cv::StereoBM> stereo = cv::StereoBM::create(ndisparities, blocksize);
+stereo->compute(g1, g2, disp8);
+normalize(disp8, disp8, 0, 255, NORM_MINMAX, CV_8U);
+
+// StereoBM 2
 StereoBM sbm;
 sbm.state->SADWindowSize = 9;
 sbm.state->numberOfDisparities = 112;
@@ -232,6 +240,14 @@ sbm.state->disp12MaxDiff = 1;
 sbm(g1, g2, disp);
 normalize(disp, disp8_, 0, 255, CV_MINMAX, CV_8U);
 
+// StereoSGBM 1
+int ndisparities = 16;
+int blocksize = 21;
+cv::Ptr<cv::StereoSGBM> stereoSGBM = cv::StereoSGBM::create(ndisparities, blocksize);
+stereo->compute(g1, g2, disp8);
+normalize(disp8, disp8, 0, 255, NORM_MINMAX, CV_8U);
+
+// StereoSGBM 2
 StereoSGBM sgbm;
 sgbm.SADWindowSize = 5;
 sgbm.numberOfDisparities = 192;

@@ -8,7 +8,7 @@
 4. [StereoVision in PC Python]
 5. [Image StereoVision 결과]
 
-<br>
+<br><br><br>
 
 # 1. Image StereoVision in PC C++ & Python
 
@@ -19,7 +19,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - 두 환경 공통적으로 OpenCV 라이브러리를 활용한다.
 
 
-<br>
+<br><br><br>
 
 # 2. OpenCV
 
@@ -69,12 +69,191 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 
 
-<br>
+<br><br><br>
 
 # 3. StereoVision 이미지 획득
 
+<img src="https://user-images.githubusercontent.com/66783849/186562543-390c72d1-c068-490f-b3cc-51cb47d8441f.png" width="69%">
+
 - Stereo Vision을 위한 이미지 샘플을 획득한다.
 
+
+
+
+<br><br><br>
+
+# 4. StereoVision in PC C++
+
+- [2. OpenCV] 항목을 참고하여 Visual Studio에 OpenCV를 연동한다.
+  - Visual Studio 2019 시작 > `새 프로젝트 만들기` > "빈 프로젝트" > 프로젝트 명 지정 후 생성
+  - 이후 OpenCV 항목을 참고
+- Stereo Vision을 위한 과정은 다음과 같다.
+  - 이미지 로딩 및 출력
+  - sbm, sgbm
+  - Rank, Census
+  - HMI-SGM, Layered stereo, Belief prop, GC+occl
+  - 결과
+
+<br>
+
+### ◆ 이미지 로딩 및 출력
+
+- OpenCV를 통해 이미지를 쉽게 로딩 및 출력할 수 있도록 구성한다.
+  ```cpp
+  vector<string> image_names;
+	image_names.push_back("../image/ambush_5_L.jpg");
+	image_names.push_back("../image/ambush_5_R.jpg");
+	image_names.push_back("../image/arc_L.jpg");
+	image_names.push_back("../image/arc_R.jpg");
+	image_names.push_back("../image/bike_L.png");
+	image_names.push_back("../image/bike_R.png");
+	image_names.push_back("../image/toy_L.png");
+	image_names.push_back("../image/toy_R.png");
+	image_names.push_back("../image/toys_L.png");
+	image_names.push_back("../image/toys_R.png");
+
+	Mat images[10];
+	for (int i = 0; i < image_names.size(); i++) {
+		images[i] = imread(image_names[i], 0);
+		CV_Assert(images[i].data);
+		resize(images[i], images[i], Size(450, 375));
+	}
+	cout << " 이미지 " << image_names.size() << " 개 로딩 성공!" << endl << endl;
+  ```
+
+<br>
+
+### ◆ StereoBM, StereoSGBM
+- StereoBM과 StereoSGBM은 각각 OpenCV에서 제공하는 전역 정합(Global Matching) 방법이랑, 지역 정합(Local Matching) 방법이다.
+- 간단한 StereoBM 기능을 활용한 StereoVision 코드를 구성한다.
+  ```cpp
+  int BMndisparities = 16 * 4;
+	int BMblocksize = 17; //홀수
+
+  for (int i = a; i < image_names.size(); i += 2) {
+
+		cout << image_names[i] << " Streovision BM" << endl;
+
+		clock_t startTime, endTime; endTime = clock();
+
+		cv::Ptr<cv::StereoBM> stereo = cv::StereoBM::create(BMndisparities, BMblocksize);
+
+		startTime = clock();
+		stereo->compute(images[i], images[i + 1], StereoVision_Result_image);
+		normalize(StereoVision_Result_image, StereoVision_Result_image, 0, 255, NORM_MINMAX, CV_8U);
+
+
+		printf("-----%fs----- \n\n", (double)(clock() - startTime) / CLOCKS_PER_SEC);
+
+
+		imshow("Image_L", images[i]); imshow("Image_R", images[i + 1]);
+		imshow("Result", StereoVision_Result_image); waitKey(0);
+
+		imwrite("IMG_StereoVision_BM_Result" + to_string(i) + ".png", StereoVision_Result_image);
+
+	}
+  ```
+- 마찬가지로 StereoSGBM도 마찬가지이다.
+  ```cpp
+  for (int i = a; i < image_names.size(); i += 2) {
+
+		cout << image_names[i] << " Streovision SGBM" << endl;
+
+		clock_t startTime, endTime; endTime = clock();
+
+		cv::Ptr<cv::StereoSGBM> stereo = cv::StereoSGBM::create(SGBMndisparities, SGBMblocksize);
+		stereo->setNumDisparities(SGBMndisparities);
+		stereo->setBlockSize(SGBMblocksize);
+		stereo->setPreFilterCap(31);
+		stereo->setUniquenessRatio(0);
+		stereo->setSpeckleRange(0);
+		stereo->setSpeckleWindowSize(0 * 2);
+		stereo->setDisp12MaxDiff(SGBMdisp12MaxDiff); // 틈
+		stereo->setMinDisparity(SGBMuniquenessRatio);
+
+		startTime = clock();
+		stereo->compute(images[i], images[i + 1], StereoVision_Result_image);
+		normalize(StereoVision_Result_image, StereoVision_Result_image, 0, 255, NORM_MINMAX, CV_8U);
+
+		printf("-----%fs----- \n\n", (double)(clock() - startTime) / CLOCKS_PER_SEC);
+
+		//imshow("Image_L", images[i]); imshow("Image_R", images[i + 1]);
+		imshow("Result", StereoVision_Result_image); waitKey(0);
+
+		imwrite("IMG_StereoVision_SGBM_Result" + to_string(i) + ".png", StereoVision_Result_image);
+
+	}
+  ```
+- OpenCV의 Track 기능을 활용하여 실시간으로 요소를 변경하면서 확인할 수 있도록 한다.
+  ```cpp
+  cv::Ptr<cv::StereoBM> stereot0 = cv::StereoBM::create();
+  
+  int numDisparities = 8;
+  int blockSize = 5;
+  int preFilterType = 1;
+  int preFilterSize = 1;
+  int preFilterCap = 31;
+  int minDisparity = 0;
+  int textureThreshold = 10;
+  int uniquenessRatio = 15;
+  int speckleRange = 0;
+  int speckleWindowSize = 0;
+  int disp12MaxDiff = -1;
+
+  static void on_trackbar1(int, void*) {
+  	stereot0->setNumDisparities(numDisparities * 16);
+  	stereot1->setNumDisparities(numDisparities * 16);
+	  numDisparities = numDisparities * 16;
+  }
+  
+  static void on_trackbar2(int, void*) {
+	  stereot0->setBlockSize(blockSize * 2 + 5);
+	  stereot1->setBlockSize(blockSize * 2 + 5);
+	  blockSize = blockSize * 2 + 5;
+  }
+  //...//
+  static void on_trackbar11(int, void*) {
+  	stereot0->setMinDisparity(minDisparity);
+	  stereot1->setMinDisparity(minDisparity);
+  }
+
+  //...//
+  // main문 내부//
+  //...//
+  
+  cout << "ESC Key to Next" << endl;
+
+	Mat StereoVision_Result_image;
+
+	// Creating a named window to be linked to the trackbars
+	namedWindow("disparity", WINDOW_NORMAL);
+	resizeWindow("disparity", 600, 600);
+
+	// Creating trackbars to dynamically update the StereoBM parameters
+	createTrackbar("numDisparities", "disparity", &numDisparities, 18, on_trackbar1);
+	createTrackbar("blockSize", "disparity", &blockSize, 50, on_trackbar2);
+	createTrackbar("preFilterType", "disparity", &preFilterType, 1, on_trackbar3);
+	createTrackbar("preFilterSize", "disparity", &preFilterSize, 25, on_trackbar4);
+	createTrackbar("preFilterCap", "disparity", &preFilterCap, 62, on_trackbar5);
+	createTrackbar("textureThreshold", "disparity", &textureThreshold, 100, on_trackbar6);
+	createTrackbar("uniquenessRatio", "disparity", &uniquenessRatio, 100, on_trackbar7); //0
+	createTrackbar("speckleRange", "disparity", &speckleRange, 100, on_trackbar8);
+	createTrackbar("speckleWindowSize", "disparity", &speckleWindowSize, 25, on_trackbar9);
+	createTrackbar("disp12MaxDiff", "disparity", &disp12MaxDiff, 25, on_trackbar10);
+	createTrackbar("minDisparity", "disparity", &minDisparity, 25, on_trackbar11);
+
+	int n = 0;
+	while (1) {
+
+		//stereot0->compute(images[n], images[n + 1], StereoVision_Result_image);
+		stereot1->compute(images[n], images[n + 1], StereoVision_Result_image);
+		normalize(StereoVision_Result_image, StereoVision_Result_image, 0, 255, NORM_MINMAX, CV_8U);
+	
+  	imshow("disparity", StereoVision_Result_image);
+	
+  	if (waitKey(10) == 27) break; //esc
+  }
+  ```
 
 
 ## 참고
