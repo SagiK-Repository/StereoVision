@@ -69,6 +69,12 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 
 
+<br>
+
+# 3. StereoVision 이미지 획득
+
+- Stereo Vision을 위한 이미지 샘플을 획득한다.
+
 
 
 ## 참고
@@ -86,3 +92,6 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - Stereo Vision 코드
   - https://adioshun.gitbooks.io/gitbook_from_github/content/Image_Process_ch15.html
   - https://eehoeskrap.tistory.com/103
+- Steteo Vision Image DataSource 제공
+  - https://vision.middlebury.edu/stereo/data/
+  - 
