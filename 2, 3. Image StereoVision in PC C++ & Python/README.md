@@ -280,8 +280,15 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 <br>
 
 #### ◆ StereoBM, StereoSGBM 결과
- - 이미지크기 450*375를 기준으로, StereoBM은 평균 4ms, StereoSGBM은 평균 30.6ms가 나왔다.
- - 이미지크기 1024*1454를 기준으로, StereoBM은 75ms, StereoSGBM은 1323ms가 나왔다.
+
+<img src="https://user-images.githubusercontent.com/66783849/186617499-d3d0f7ab-2da8-47c0-b939-cb7a7288bfcd.png">
+
+ - 이미지크기 450*375를 기준으로,  
+   StereoBM은 평균 4ms,  
+   StereoSGBM은 평균 30.6ms가 나왔다.  
+ - 이미지크기 1024*1454를 기준으로,  
+   StereoBM은 75ms,  
+   StereoSGBM은 1323ms가 나왔다.  
 
 ## 참고
 
@@ -289,7 +296,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   - https://ko.wikipedia.org/wiki/OpenCV
 
 
-
+- Stereo Vision
+  - http://mccormickml.com/2014/01/10/stereo-vision-tutorial-part-i/
 - Stereo Matching 방법
   - https://m.blog.naver.com/PostView.naver?blogId=dldlsrb45&logNo=220879295400&targetKeyword=&targetRecommendationCode=1
 - Steroe Vision 비용 방법 비교 논문
@@ -300,6 +308,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   - https://eehoeskrap.tistory.com/103
 - StereoBM 코드
   - https://learnopencv.com/depth-perception-using-stereo-camera-python-c/
+  - https://docs.opencv.org/3.1.0/d3/d14/tutorial_ximgproc_disparity_filtering.html
+  - https://makepluscode.tistory.com/105
+  - https://leechamin.tistory.com/362
 - Steteo Vision Image DataSource 제공
   - https://vision.middlebury.edu/stereo/data/
-  - 
