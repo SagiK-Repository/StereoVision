@@ -305,7 +305,13 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 
 
-, HMI-SGM (  - Layered stereo, Belief prop, GC+occl)
+<br>
+
+
+### ◆ Semi-Global Matching (SGM)
+
+- [SGM](https://github.com/gishi523/semi-global-matching)을 토대로 작성하였다.
+
 
 <br><br><br>
 
