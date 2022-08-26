@@ -317,6 +317,19 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - 결과 : 평균 0.1462s
 
 
+<br><br>
+
+## ◆ Stereo Vision C++ 종합 결과
+
+  | 평균시간 | Fast
+-- | -- | --
+StereoBM | 0.004 |  
+StereoSGBM | 0.075 |  
+Census T | 3.3292 | 0.4008
+Rank T | 2.5628 | 0.3266
+Semi-Global M | 0.1462 |  
+
+
 <br><br><br>
 
 # 4. StereoVision in PC Python
