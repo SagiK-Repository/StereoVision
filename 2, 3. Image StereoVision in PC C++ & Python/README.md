@@ -294,7 +294,22 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 <br>
 
 
-### ◆ Census Transform, HMI-SGM (  - Layered stereo, Belief prop, GC+occl)
+### ◆ Census Transform
+
+- 온라인상에서 Census Transform 프로그램 코드를 획득할 수 있다.
+- 함수형식으로 개조하여 사용할 수 있도록 한다.
+  ```cpp
+  #include <opencv2/gapi/cpu/stereo.hpp>
+  
+  //...//
+
+
+  ```
+
+
+
+
+, HMI-SGM (  - Layered stereo, Belief prop, GC+occl)
 
 <br><br><br>
 
@@ -324,4 +339,4 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - Stereo Vision Image DataSource 제공
   - https://vision.middlebury.edu/stereo/data/
 - Stereo Vision Census Transform
-  - https://docs.opencv.org/4.x/d2/d7f/namespacecv_1_1stereo.html
+  - https://hangyinuml.wordpress.com/2012/09/08/census-transform-c-implementation/
