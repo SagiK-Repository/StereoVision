@@ -90,8 +90,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - Stereo Vision을 위한 과정은 다음과 같다.
   - 이미지 로딩 및 출력
   - sbm, sgbm
-  - Census, HMI-SGM
-  - Layered stereo, Belief prop, GC+occl
+  - Census, Rank transform
+  - HMI-SGM, Layered stereo, Belief prop, GC+occl
   - 결과
 
 <br>
@@ -294,18 +294,38 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 <br>
 
 
-### ◆ Census Transform
+### ◆ Census Transform, Rank Transform
 
 - 온라인상에서 Census Transform 프로그램 코드를 획득할 수 있다.
 - 함수형식으로 개조하여 사용할 수 있도록 한다.
+- 자세한 코드 내용은 Repository를 참고한다.
   ```cpp
-  #include <opencv2/gapi/cpu/stereo.hpp>
-  
+  int max_disparity = 16 * 4;
+	int win_size = 20;
+	int tranwin_size = 2;
+  // Census Transform stereo match
+  StereoVision_Result_image = CTSM(images[i], images[i + 1], win_size, max_disparity, tranwin_size);
   //...//
-
-
+  //Rank Transform Stereo Matching
+  StereoVision_Result_image = RTSM(images[i], images[i + 1], win_size, max_disparity, tranwin_size);
   ```
 
+<br>
+
+#### ◆ Census Transform, Rank Transform 결과
+
+<img src="https://user-images.githubusercontent.com/66783849/186896280-83ef1f51-e76b-4e46-8f51-860d7c6b6fcc.png" width="49%">
+(win_size = 20)  
+
+<img src="https://user-images.githubusercontent.com/66783849/186897702-f4dfc2bb-135f-4454-8b2c-228e37989f51.png">
+(win_size = 7)  
+
+- win_size = 20
+  - Census Transform : 3.3292s
+  - Rank Transform : 2.5628s
+- win_size = 7
+  - Census Transform : 0.4008s
+  - Rank Transform : 0.3266s
 
 
 
