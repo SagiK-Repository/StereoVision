@@ -126,8 +126,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 ### ◆ StereoBM, StereoSGBM
 
 <img src="https://user-images.githubusercontent.com/66783849/186613743-e4d71935-a849-457a-8837-a199ebd1e031.png" width="69%">
-
-- 사진의 위에 5개는 StereoBM, 아래 5개는 StereoSGBM이다.
+(사진의 위에 5개는 StereoBM, 아래 5개는 StereoSGBM이다.)  
+ 
 - StereoBM과 StereoSGBM은 각각 OpenCV에서 제공하는 전역 정합(Global Matching) 방법이랑, 지역 정합(Local Matching) 방법이다.
 - StereoBM 기능을 활용한 StereoVision 코드를 구성한다.
   ```cpp
@@ -314,11 +314,9 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 #### ◆ Census Transform, Rank Transform 결과
 
-<img src="https://user-images.githubusercontent.com/66783849/186896280-83ef1f51-e76b-4e46-8f51-860d7c6b6fcc.png" width="49%">
-(win_size = 20)  
+<img src="https://user-images.githubusercontent.com/66783849/186896280-83ef1f51-e76b-4e46-8f51-860d7c6b6fcc.png"> (win_size = 20)  
 
-<img src="https://user-images.githubusercontent.com/66783849/186897702-f4dfc2bb-135f-4454-8b2c-228e37989f51.png">
-(win_size = 7)  
+<img src="https://user-images.githubusercontent.com/66783849/186897702-f4dfc2bb-135f-4454-8b2c-228e37989f51.png"> (win_size = 7)  
 
 - win_size = 20
   - Census Transform : 3.3292s
