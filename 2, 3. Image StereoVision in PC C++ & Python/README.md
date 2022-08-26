@@ -91,7 +91,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   - 이미지 로딩 및 출력
   - sbm, sgbm
   - Census, Rank transform
-  - HMI-SGM, Layered stereo, Belief prop, GC+occl
+  - Semi-Global-Matching, Patch-Match-Stereo
+  - (HMI-SGM, Layered stereo, Belief prop, GC+occl)
   - 결과
 
 <br>
@@ -172,37 +173,14 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   ```
 - 마찬가지로 StereoSGBM도 마찬가지이다.
   ```cpp
-  int SGBMndisparities = 16 * 4;
-	int SGBMblocksize = 17;
-	int SGBMdisp12MaxDiff = 25;
-	int SGBMuniquenessRatio = 0;
-  for (int i = a; i < image_names.size(); i += 2) {
-
-		cout << image_names[i] << " Streovision SGBM" << endl;
-
-		clock_t startTime, endTime; endTime = clock();
+  //...//
 
 		cv::Ptr<cv::StereoSGBM> stereo = cv::StereoSGBM::create(SGBMndisparities, SGBMblocksize);
-		stereo->setNumDisparities(SGBMndisparities);
-		stereo->setBlockSize(SGBMblocksize);
-		stereo->setPreFilterCap(31);
-		stereo->setUniquenessRatio(0);
-		stereo->setSpeckleRange(0);
-		stereo->setSpeckleWindowSize(0 * 2);
-		stereo->setDisp12MaxDiff(SGBMdisp12MaxDiff); // 틈
-		stereo->setMinDisparity(SGBMuniquenessRatio);
-
-		startTime = clock();
+  //...//
 		stereo->compute(images[i], images[i + 1], StereoVision_Result_image);
 		normalize(StereoVision_Result_image, StereoVision_Result_image, 0, 255, NORM_MINMAX, CV_8U);
 
-		printf("-----%fs----- \n\n", (double)(clock() - startTime) / CLOCKS_PER_SEC);
-
-		//imshow("Image_L", images[i]); imshow("Image_R", images[i + 1]);
-		imshow("Result", StereoVision_Result_image); waitKey(0);
-
-		imwrite("IMG_StereoVision_SGBM_Result" + to_string(i) + ".png", StereoVision_Result_image);
-
+  //...//
 	}
   ```
 - OpenCV의 Track 기능을 활용하여 실시간으로 요소를 변경하면서 확인할 수 있도록 한다.  
@@ -316,7 +294,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 <img src="https://user-images.githubusercontent.com/66783849/186896280-83ef1f51-e76b-4e46-8f51-860d7c6b6fcc.png"> (win_size = 20)  
 
-<img src="https://user-images.githubusercontent.com/66783849/186897702-f4dfc2bb-135f-4454-8b2c-228e37989f51.png"> (win_size = 7)  
+<img src="https://user-images.githubusercontent.com/66783849/186897702-f4dfc2bb-135f-4454-8b2c-228e37989f51.png"> (위 : Census, 아래 : Rank ,win_size = 7)  
 
 - win_size = 20
   - Census Transform : 3.3292s
@@ -358,3 +336,9 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
   - https://vision.middlebury.edu/stereo/data/
 - Stereo Vision Census Transform
   - https://hangyinuml.wordpress.com/2012/09/08/census-transform-c-implementation/
+- Stereo Vision Matching
+  - [Semi-Global-Matching](https://github.com/ethan-li-coding/SemiGlobalMatching)
+  - [Patch-Match-Stereo](https://github.com/ethan-li-coding/PatchMatchStereo)
+  - [SGM](https://github.com/gishi523/semi-global-matching)
+  - [Semi-Global-Matching, Slanted Plane Smoothing (SPS)](https://github.com/WanchaoYao/SGM)
+  - [Semi-Global Matching on the GPU](https://github.com/dhernandez0/sgm)
