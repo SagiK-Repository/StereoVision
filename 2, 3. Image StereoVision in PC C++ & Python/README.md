@@ -310,7 +310,11 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 
 ### ◆ Semi-Global Matching (SGM)
 
+<img src="https://user-images.githubusercontent.com/66783849/186927592-f8792318-10e1-4262-8e79-8f7837e9ada6.png">
+
 - [SGM](https://github.com/gishi523/semi-global-matching)을 토대로 작성하였다.
+- Repository를 통해 그 파일위치를 확인할 수 있다.
+
 
 
 <br><br><br>
