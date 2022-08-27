@@ -472,6 +472,8 @@ Semi-Global M | 0.1462 |  
 
 #### ◆ StereoBM, StereoSGBM, Census Transform, Semi-Global-Matching 결과
 
+<img src="https://user-images.githubusercontent.com/66783849/187015786-5f5a30fd-8b72-40fb-ba59-fea6b534ef21.png">
+
 - StereoBM : 0.0074s
 - StereoSGBM : 0.033s
 - Census Transform : 0.67s
@@ -488,8 +490,6 @@ StereoBM | 0.004s | 0.0074s
 StereoSGBM | 0.075s | 0.033s
 Census Transform | 3.3292s | 0.67s
 Semi-Global-Matching | 0.1462s | 133s
-
-<img src="https://user-images.githubusercontent.com/66783849/187015786-5f5a30fd-8b72-40fb-ba59-fea6b534ef21.png">
 
 
 <br><br><br>
