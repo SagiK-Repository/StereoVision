@@ -87,7 +87,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 - [2. OpenCV] 항목을 참고하여 Visual Studio에 OpenCV를 연동한다.
   - Visual Studio 시작 > `새 프로젝트 만들기` > "빈 프로젝트" > 프로젝트 명 지정 후 생성
   - 이후 OpenCV 항목을 참고
-- Stereo Vision을 위한 과정은 다음과 같다.
+- Stereo Vision C++을 위한 과정은 다음과 같다.
   - 이미지 로딩 및 출력
   - sbm, sgbm
   - Census, Rank transform
@@ -332,8 +332,62 @@ Semi-Global M | 0.1462 |  
 
 <br><br><br>
 
-# 4. StereoVision in PC Python
+# 5. StereoVision in PC Python
 
+- Jupyter 및 Colab을 통한 Python 코딩을 진행한다.
+- Stereo Vision Python을 위한 과정은 다음과 같다.
+  - 이미지 로딩 및 출력
+  - sbm, sgbm
+  - Census, Rank transform
+  - Semi-Global-Matching, Patch-Match-Stereo
+  - (HMI-SGM, Layered stereo, Belief prop, GC+occl)
+  - 결과
+
+
+<br>
+
+### ◆ 이미지 로딩 및 출력
+
+- 배열을 통해 OpenCV 이미지를 쉽게 출력할 수 있도록 구성한다.
+  ```python
+  image_name = ["img/ambush_5_L.jpg",
+  "img/ambush_5_R.jpg",
+  "img/arc_L.jpg",
+  "img/arc_R.jpg",
+  "img/bike_L.png",
+  "img/bike_R.png",
+  "img/toy_L.png",
+  "img/toy_R.png",
+  "img/toys_L.png",
+  "img/toys_R.png"]
+  print(image_name[0])
+  print(image_name[7])
+
+  img = []
+  for i in image_name:
+      img.append(cv2.imread(i,0))
+
+  cv2.imshow("TEST",img[0])
+  cv2.waitKey(0)
+  cv2.destroyAllWindows()
+  ```
+
+<br>
+
+### ◆ StereoBM, StereoSGBM, Census Transform, Semi-Global-Matching
+
+- 이미지만 입력하면 쉽게 출력결과가 나올 수 있도록 함수화하여 구성한다.
+
+
+
+
+
+
+
+
+
+
+<br><br><br>
 
 
 ## 참고
@@ -365,3 +419,9 @@ Semi-Global M | 0.1462 |  
   - [SGM](https://github.com/gishi523/semi-global-matching)
   - [Semi-Global-Matching, Slanted Plane Smoothing (SPS)](https://github.com/WanchaoYao/SGM)
   - [Semi-Global Matching on the GPU](https://github.com/dhernandez0/sgm)
+- Stereo Vision Python 코드
+  - http://daplus.net/python-opencv-%EB%B3%B4%EC%A0%95%EB%90%98%EC%A7%80-%EC%95%8A%EC%9D%80-%EC%8A%A4%ED%85%8C%EB%A0%88%EC%98%A4-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%98-%EA%B9%8A%EC%9D%B4-%EB%A7%B5/
+  - https://leechamin.tistory.com/362
+  - https://learnopencv.com/depth-perception-using-stereo-camera-python-c/
+  - (Census Transform - Python) https://stackoverflow.com/questions/38265364/census-transform-in-python-opencv
+  - 
