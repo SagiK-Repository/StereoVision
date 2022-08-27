@@ -390,7 +390,7 @@ Semi-Global M | 0.1462 |  
       plt.colorbar()
       plt.show()
   
-  def StereoSGBM(imgL,imgR, nD = 16, bS = 15) :
+  def StereoSGBM(imgL,imgR, nD = 16, bS = 15, win_size=3) :
       stereo = cv2.StereoSGBM_create(
           numDisparities=nD,
           blockSize=bS,
@@ -445,7 +445,7 @@ Semi-Global M | 0.1462 |  
       plt.show()
   
   ```
-- 다음과 같이 시간 측정과 더불어 활용한다.
+- 다음과 같이 활용한다.
   ```python
   for i in range(0,10,2) :
       StereoBM(img[i], img[i+1], 16*4, 17)
