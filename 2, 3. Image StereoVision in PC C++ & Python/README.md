@@ -377,14 +377,119 @@ Semi-Global M | 0.1462 |  
 ### ◆ StereoBM, StereoSGBM, Census Transform, Semi-Global-Matching
 
 - 이미지만 입력하면 쉽게 출력결과가 나올 수 있도록 함수화하여 구성한다.
+  ```python
+  def StereoBM(imgL,imgR, nD = 16, bS = 15) :
+      stereo = cv2.StereoBM_create(nD, bS)
+      stereo.setDisp12MaxDiff(25)
+      stereo.setUniquenessRatio(15)
+      start = time.time()
+      disparity = stereo.compute(imgL,imgR)
+      end = time.time()
+      print(f"{end - start:.5f} sec")
+      plt.imshow(disparity,'gray')
+      plt.colorbar()
+      plt.show()
+  
+  def StereoSGBM(imgL,imgR, nD = 16, bS = 15) :
+      stereo = cv2.StereoSGBM_create(
+          numDisparities=nD,
+          blockSize=bS,
+          uniquenessRatio=5,
+          speckleWindowSize=5,
+          speckleRange=5,
+          disp12MaxDiff=25,
+          P1=8 * 3 * win_size ** 2,
+          P2=32 * 3 * win_size ** 2,
+      )
+      start = time.time()
+      disparity = stereo.compute(imgL,imgR)
+      end = time.time()
+      print(f"{end - start:.5f} sec")
+      plt.imshow(disparity,'gray')
+      plt.colorbar()
+      plt.show()
+  
+  def Census_Transform (left, right, window_size = 5, ndisp = 7):
+      ct_left = norm(transform(left, window_size)) ## Census Transform
+      ct_right = norm(transform(right, window_size))
+  
+      ct_costs = [] ## Result
+      for exponent in range(0, 6):
+          import math
+          disparity = int(ndisp / math.pow(2, exponent))
+          #print(math.pow(2, exponent), disparity)
+          ct_costs.append(norm(cost(left, right, window_size, disparity)))
+      #plt.imshow(ct_left, 'gray')
+      plt.imshow(ct_costs[0], 'gray') ## 'costs'
+      plt.colorbar()
+      plt.show()
+  
+  def SGM(left, right, papram):
+      paths = Paths()
+      left_cost_volume, right_cost_volume = compute_costs(left, right, parameters)
+  
+      print('\nStarting left aggregation computation...')
+      left_aggregation_volume = aggregate_costs(left_cost_volume, parameters, paths)
+      print('\nStarting right aggregation computation...')
+      right_aggregation_volume = aggregate_costs(right_cost_volume, parameters, paths)
+  
+      print('\nSelecting best disparities...')
+      left_disparity_map = np.uint8(normalize(select_disparity(left_aggregation_volume), parameters))
+      right_disparity_map = np.uint8(normalize(select_disparity(right_aggregation_volume), parameters))
+  
+      print('\nApplying median filter...')
+      left_disparity_map = cv2.medianBlur(left_disparity_map, parameters.bsize[0])
+      
+      plt.imshow(left_disparity_map, 'gray') ## 'costs'
+      plt.colorbar()
+      plt.show()
+  
+  ```
+- 다음과 같이 시간 측정과 더불어 활용한다.
+  ```python
+  for i in range(0,10,2) :
+      StereoBM(img[i], img[i+1], 16*4, 17)
+  
+  for i in range(0,10,2) :
+      StereoSGBM(img[i], img[i+1], 16*4, 17)    
+  
+  for i in range(0,10,2) :
+      start = time.time()
+      Census_Transform(img[i], img[i+1], 17, 16*4)
+      end = time.time()
+      print(f"{end - start:.5f} sec")
+  
+  parameters = Parameters(max_disparity=64, P1=10, P2=120, csize=(7, 7), bsize=(3, 3))
+  for i in range(0,10,2) :
+      start = time.time()
+      SGM(img[i], img[i+1], parameters)
+      end = time.time()
+      print(f"{end - start:.5f} sec")
+  ```
 
 
+<br>
+
+#### ◆ StereoBM, StereoSGBM, Census Transform, Semi-Global-Matching 결과
+
+- StereoBM : 0.0074s
+- StereoSGBM : 0.033s
+- Census Transform : 0.67s
+- Semi-Global-Matching : 133s
 
 
+<br><br><br>
 
+# 6. Image StereoVision 결과
 
+  | C++ | python
+-- | -- | --
+StereoBM | 0.004s | 0.0074s
+StereoSGBM | 0.075s | 0.033s
+Census Transform | 3.3292s | 0.67s
+Semi-Global-Matching | 0.1462s | 133s
 
-
+<img src="https://user-images.githubusercontent.com/66783849/187015786-5f5a30fd-8b72-40fb-ba59-fea6b534ef21.png">
 
 
 <br><br><br>
