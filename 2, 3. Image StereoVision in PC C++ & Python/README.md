@@ -529,4 +529,3 @@ Semi-Global-Matching | 0.1462s | 133s
   - https://leechamin.tistory.com/362
   - https://learnopencv.com/depth-perception-using-stereo-camera-python-c/
   - (Census Transform - Python) https://stackoverflow.com/questions/38265364/census-transform-in-python-opencv
-  - 
