@@ -1,4 +1,4 @@
-문서정보 : 2022.08.25.~ 작성, 작성자 [@SAgiKPJH](https://github.com/SAgiKPJH)
+문서정보 : 2022.08.25.~28. 작성, 작성자 [@SAgiKPJH](https://github.com/SAgiKPJH)
 
 # 목차
 1. [Image StereoVision in PC C++ & Python](https://github.com/SagiK-Repository/StereoVision/tree/main/2%2C%203.%20Image%20StereoVision%20in%20PC%20C%2B%2B%20%26%20Python#1-image-stereovision-in-pc-c--python)
