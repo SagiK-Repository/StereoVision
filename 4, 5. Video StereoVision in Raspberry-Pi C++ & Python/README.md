@@ -3,11 +3,11 @@
 # 목차
 1. [Video StereoVision in Raspberry-Pi C++ & Python]
 2. [Raspberry-Pi 환경 설정]
-2. [Raspberry-Pi 원격 조종 설정]
-3. [StereoVision 이미지 획득]
-4. [StereoVision in C++]
-5. [StereoVision in Python]
-6. [StereoVision 결과]
+3. [Raspberry-Pi 원격 조종 설정]
+4. [StereoVision 이미지 획득]
+5. [StereoVision in C++]
+6. [StereoVision in Python]
+7. [StereoVision 결과]
 
 <br><br><br>
 
