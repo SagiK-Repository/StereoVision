@@ -8,6 +8,40 @@
 5. [StereoVision in PC Python](https://github.com/SagiK-Repository/StereoVision/tree/main/2%2C%203.%20Image%20StereoVision%20in%20PC%20C%2B%2B%20%26%20Python#5-stereovision-in-pc-python)
 6. [Image StereoVision 결과](https://github.com/SagiK-Repository/StereoVision/tree/main/2%2C%203.%20Image%20StereoVision%20in%20PC%20C%2B%2B%20%26%20Python#6-image-stereovision-%EA%B2%B0%EA%B3%BC)
 
+<br>
+
+```mermaid
+flowchart LR
+
+subgraph G_1["1. Image StereoVision<br> in PC C++ & Python"]
+A_1["PC C++ 환경"] ---> A_1_1["Visual Studio"] 
+A_2["PC Python 환경"] ---> A_2_1["Anaconda - Jupyter"] 
+end
+
+subgraph G_2["2. OpenCV"]
+A_1_1 ---> B_1["OpenCV <br> Visual Studio C++ 연동"]
+A_2_1 ---> B_2["OpenCV <br> Python 연동"]
+end
+
+G_3{{"3. StreoImage 획득"}}
+G_3 ---> D_1_1
+G_3 ---> D_2_1
+
+subgraph G_4["4. StreoVision in PC C++"]
+B_1 ---> D_1_1["C++<br> StreoBM<br>StreoSGBM"] ---> D_1_3["C++<br> Census/Rank Transform"] ---> D_1_5["C++<br> SGM"]
+end
+
+subgraph G_5["5. StreoVision in PC Python"]
+B_2 ---> D_2_1["Python<br> StreoBM<br>StreoSGBM"] --->  D_2_3["Python<br> Census Transform"] ---> D_2_4["Python<br> SGM"]
+end
+
+subgraph G_6["6. ImageStreoVision 결과"]
+end
+
+D_1_5 & D_2_4 ---> G_6
+
+```
+
 <br><br><br>
 
 # 1. Image StereoVision in PC C++ & Python
