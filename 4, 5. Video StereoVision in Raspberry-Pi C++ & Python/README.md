@@ -22,29 +22,19 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 
 ### ◆ 사용 장비
 
-<img src="https://user-images.githubusercontent.com/66783849/187056296-254ea736-2c20-41d9-82d6-f4c9b4f71b63.png" width="30%"><br>
-(3D 스테레오 카메라 모듈 IMX219-83 8MP)
-
-<img src="https://user-images.githubusercontent.com/66783849/187056476-c0e7b858-d937-4c69-a62d-3a5ad0cdd741.png" width="30%"><br>
-(Multi Camera Adapter Doubleplexer Stereo Module V2 for Raspberry Pi)
-
-
-<img src="https://user-images.githubusercontent.com/66783849/187056546-f6e57380-7b9f-4fbc-8552-96f0d3610119.png" width="30%"><br>
-(Raspberry Pi)
-
-<br>
-<br>
-
 - 라즈베리 파이로 스트레오비전을 제어하기 위해서 다음과 같은 부품을 준비한다.
-  - [3D 스테레오 카메라 모듈 IMX219-83 8MP](https://www.devicemart.co.kr/goods/view?no=13008080)
+  - [3D 스테레오 카메라 모듈 IMX219-83 8MP](https://www.devicemart.co.kr/goods/view?no=13008080)  
+    <img src="https://user-images.githubusercontent.com/66783849/187056296-254ea736-2c20-41d9-82d6-f4c9b4f71b63.png" width="30%">
     - 가격 : 73,700원
     - FOV : 83/73/50 degree (diagonal/horizontal/vertical)
     - 초점거리 : 2.6mm
     - 해상도 : 3280 × 2464
-  - [Multi Camera Adapter Doubleplexer Stereo Module V2 for Raspberry Pi](https://www.devicemart.co.kr/goods/view?no=12231996)
+  - [Multi Camera Adapter Doubleplexer Stereo Module V2 for Raspberry Pi](https://www.devicemart.co.kr/goods/view?no=12231996)  
+    <img src="https://user-images.githubusercontent.com/66783849/187056476-c0e7b858-d937-4c69-a62d-3a5ad0cdd741.png" width="30%">
     - 가격 : 38,000원
     - 2개의 5MP 또는 8MP 카메라 연결 가능
-  - Raspberry Pi 4
+  - Raspberry Pi 4  
+    <img src="https://user-images.githubusercontent.com/66783849/187056546-f6e57380-7b9f-4fbc-8552-96f0d3610119.png" width="30%">
     - 80,000원
     - 용량 4GB
     - [참고 사이트](https://www.devicemart.co.kr/goods/view?no=12234534)
