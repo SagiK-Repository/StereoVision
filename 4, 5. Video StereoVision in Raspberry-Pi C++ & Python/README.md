@@ -63,7 +63,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   5. 이후 micro SD카드를 연결하여 raspberry-Pi를 킨다.
      <img src="https://user-images.githubusercontent.com/66783849/194858561-c4af5380-2209-4970-8c45-825c17583e2d.png" width="60%">  
   6. 각종 설정 이후 Rspberry-Pi를 재시작 한다. 다음과 같은 화면이 나타나면, 성공이다.
-     <img src="https://user-images.githubusercontent.com/66783849/194858561-c4af5380-2209-4970-8c45-825c17583e2d.png" width="60%">  
+     <img src="https://user-images.githubusercontent.com/66783849/194889251-6c6db724-4e51-4560-aa4a-48a5d71c15b9.png" width="60%">  
 - 한국어가 깨진 상태이면 다음과 같이 설정한다. 또한 한글 입력도 가능하도록 설정한다.
   1. 다음과 같이 터미널(<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>)을 열고 명령창을 실행한다.
   2. 다음 명령어를 입력한다.
