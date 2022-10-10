@@ -53,10 +53,45 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 
 # 2. Raspberry-Pi 환경설정
 
-- 라즈베리 파이
+- 라즈베리 파이를 실행시키기 위해서는, 준비한 micro-SD카드에 Raspberry-Pi의 OS를 설치한다.
+  1. [라즈베리 홈페이지](https://www.raspberrypi.com/software/)로 이동한다.
+  2. [Download for Windows](https://downloads.raspberrypi.org/imager/imager_latest.exe)를 눌러 imager를 설치한다.
+  3. Raspberry Pi Imager를 실행하여 저장소 선택 후 운영체제(Raspberry-Pi OS FULL(32-BIT))를 선택한다.
+     <img src="https://user-images.githubusercontent.com/66783849/194845184-58765031-2643-4d51-ada9-581398405b0d.png" width="60%">  
+  4. 쓰기 버튼을 눌러 OS를 설치한다. 쓰기가 완료되었다는 창이 나오면 sd카드를 뺀다.
+     <img src="https://user-images.githubusercontent.com/66783849/194847248-0b3d6b3d-134d-464a-b493-5b16c720f9a7.png" width="60%">  
+  5. 이후 micro SD카드를 연결하여 raspberry-Pi를 킨다.
+     <img src="https://user-images.githubusercontent.com/66783849/194858561-c4af5380-2209-4970-8c45-825c17583e2d.png" width="60%">  
+  6. 각종 설정 이후 Rspberry-Pi를 재시작 한다. 다음과 같은 화면이 나타나면, 성공이다.
+     <img src="https://user-images.githubusercontent.com/66783849/194858561-c4af5380-2209-4970-8c45-825c17583e2d.png" width="60%">  
+- 한국어가 깨진 상태이면 다음과 같이 설정한다. 또한 한글 입력도 가능하도록 설정한다.
+  1. 다음과 같이 터미널(<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>)을 열고 명령창을 실행한다.
+  2. 다음 명령어를 입력한다.
+     ```bash
+     sudo apt install fonts-unfonts-core   # 한글 폰트 설치
+
+     # 경우에 따라 apt-get 기반일 수 있다.
+     sudo apt-get install fonts-unfonts-core   # 한글 폰트 설치
+     ```
+  3. 왼쪽 상단 라즈베리 파이 아이콘 > Preferences -> Raspberry pi Configuration 실행 -> Localisation -> Set Locale... -> Language, Character Set을 각각 ko(Korean), UTF-8로 선택 되어있는지 확인한다.
+  4. 한국어 입력을 위해서 다음과 같이 명령어를 입력한다.
+     ```bash
+     sudo apt install ibus-hangul
+     sudo apt install fonts-unfonts-core
+
+     # 경우에 따라 apt-get 기반일 수 있다.
+     sudo apt-get install ibus-hangul
+     sudo apt-get install fonts-unfonts-core
+     ```
+  5. 라즈베리파이 Reboot를 하여 한글이 잘 나타나는지 확인한다.
+
 
 
 <br><br><br>
 
-
 ## 참고
+
+- [Raspberry Pi OS 설치](https://reddb.tistory.com/188)
+- Raspberry-Pi 한글 설치 (입력 설치)
+  - https://andjjip.tistory.com/86
+  - https://jasmine125.tistory.com/1016
