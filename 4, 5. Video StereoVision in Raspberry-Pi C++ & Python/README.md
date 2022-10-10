@@ -113,7 +113,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
      <img src="https://user-images.githubusercontent.com/66783849/194879459-bd7fb4b5-f5cd-4927-aeb1-d2cdbc8968f8.png" width="50%">  
   5. 원격 데스크톱 연결할 대상에 Raspberry-Pi 사용자 이름을 넣는다.
   6. 이후 연결을 눌러 비밀번호를 눌러 원격 접속이 됨을 확인한다.  
-     <img src="https://user-images.githubusercontent.com/66783849/194880213-dd565dcf-edc1-4b5b-b84c-fcda5bf98df2.png" width="50%">
+     <img src="https://user-images.githubusercontent.com/66783849/194880213-dd565dcf-edc1-4b5b-b84c-fcda5bf98df2.png" width="50%">  
      [‼만일 실패하거나 이상이 있을 경우 30초 정도가 지난 뒤에 나타나니, 기다려보자]
 - 다음 에러와 같이 한 아이디로 여러 기기에서 동시 접속불가능한 경우 유저 아이디를 만든다.  
   <img src="https://user-images.githubusercontent.com/66783849/194885388-6adf58c6-dde0-404d-b699-6389cad8d55c.png" width="40%">  
@@ -142,13 +142,13 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 ## 스트레오 카메라 연결 및 환경설정
 
 1. 왼쪽 상단 라즈베리 파이 아이콘 > Preferences -> Raspberry pi Configuration 실행 -> Interfaces -> I2C: -> Enable 선택  
-   <img src="https://user-images.githubusercontent.com/66783849/194901722-965a700f-0603-4227-809c-93445b2d7094.png" width="300">  
+  <img src="https://user-images.githubusercontent.com/66783849/194901722-965a700f-0603-4227-809c-93445b2d7094.png" width="300">  
 2. 스트레오 비전 카메라를 라즈베리 파이에 연결한다.  
   <img src="https://user-images.githubusercontent.com/66783849/194897502-83c679e8-787d-4e5c-86ca-5f9becd3ce18.png" width="300">  
-3. 다음과 같이 명령어를 입력한다.
-   ```bash
-   git clone https://github.com/ArduCAM/RaspberryPi.git
-   ```
+3. 다음과 같이 명령어를 입력한다.   
+  ```bash
+  git clone https://github.com/ArduCAM/RaspberryPi.git
+  ```
 - 2가지 방법으로 이미지를 획득한다.
 
 <br>
