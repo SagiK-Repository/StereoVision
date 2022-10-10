@@ -145,10 +145,11 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   <img src="https://user-images.githubusercontent.com/66783849/194901722-965a700f-0603-4227-809c-93445b2d7094.png" width="300">  
 2. 스트레오 비전 카메라를 라즈베리 파이에 연결한다.  
   <img src="https://user-images.githubusercontent.com/66783849/194897502-83c679e8-787d-4e5c-86ca-5f9becd3ce18.png" width="300">  
-3. 다음과 같이 명령어를 입력한다.   
-  ```bash
-  git clone https://github.com/ArduCAM/RaspberryPi.git
-  ```
+3. 다음과 같이 명령어를 입력한다.  
+
+   ```bash
+   git clone https://github.com/ArduCAM/RaspberryPi.git
+   ```
 - 2가지 방법으로 이미지를 획득한다.
 
 <br>
