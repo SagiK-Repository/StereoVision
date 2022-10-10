@@ -130,9 +130,73 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 
 <br><br><br>
 
+# 4. StereoVision 이미지 획득
+
+- StereoVision 이미지를 획득하기 위해서 StereoVision Camera를 통해 이미지를 획득할 수 있도록 한다.
+- 3D 스테레오 카메라 모듈 IMX219-83 8MP을 Raspberry Pi와 연결하여 카메라 이미지를 획득해본다.
+- 모듈에 대한 자세한 사용 방법을 [Arducam에서 제공하는 pdf](https://www.uctronics.com/download/Amazon/B016601.pdf)를 통해 확인한다.
+- 또는 Arducam에서 제공하는 [ArduCAM Github](https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444) Tutorial을 확인한다.
+
+<br>
+
+## 스트레오 카메라 연결 및 환경설정
+
+1. 왼쪽 상단 라즈베리 파이 아이콘 > Preferences -> Raspberry pi Configuration 실행 -> Interfaces -> I2C: -> Enable 선택  
+   <img src="https://user-images.githubusercontent.com/66783849/194901722-965a700f-0603-4227-809c-93445b2d7094.png" width="300">  
+2. 스트레오 비전 카메라를 라즈베리 파이에 연결한다.  
+  <img src="https://user-images.githubusercontent.com/66783849/194897502-83c679e8-787d-4e5c-86ca-5f9becd3ce18.png" width="300">  
+3. 다음과 같이 명령어를 입력한다.
+   ```bash
+   git clone https://github.com/ArduCAM/RaspberryPi.git
+   ```
+- 2가지 방법으로 이미지를 획득한다.
+
+<br>
+
+### Terminal 방법
+
+1. 다음과 같이 Terminal에 입력한다.
+   ```bash
+   cd /tmp
+   wget https://project-downloads.drogon.net/wiringpi-latest.deb
+   sudo dpkg -i wiringpi-latest.deb
+   ```
+2. 다음과 같이 스크립트를 실행한다.
+   ```bash
+   cd ~
+   cd RaspberryPi/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444/shell
+   sudo chmod +x pi_cam_uc444.sh
+   sudo ./pi_cam_uc444.sh
+   ```
+3. 다음과 같이 Demo를 실행한다.
+   ```bash
+   sudo ./pi_cam_uc444.sh
+   ```
+- 이를 통해 카메라의 인식 여부를 확인한다.
+
+<br>
+
+
+### C++ 방법
+
+1. OpenCV Library를 다운받는다.
+   ```bash
+   sudo apt install libopencv-dev
+   ```
+2. 컴파일 및 실행한다.
+   ```bash
+   cd RaspberryPi/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444
+   python arducam_multi_adapter_uc444.py
+   ```
+3. 다음과 같이 데모창이 나타나는지 확인한다.
+
+<br><br><br>
+
 ## 참고
 
 - [Raspberry Pi OS 설치](https://reddb.tistory.com/188)
 - Raspberry-Pi 한글 설치 (입력 설치)
   - https://andjjip.tistory.com/86
   - https://jasmine125.tistory.com/1016
+- [ArduCAM Multi_Adapter_Board_2Channel_uc444 pdf](https://www.uctronics.com/download/Amazon/B016601.pdf)
+- [ArduCAM Multi_Adapter_Board_2Channel_uc444 Github](https://github.com/ArduCAM/RaspberryPi/tree/master/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444)
