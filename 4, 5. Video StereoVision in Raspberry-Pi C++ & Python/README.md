@@ -83,7 +83,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
      sudo apt-get install ibus-hangul
      sudo apt-get install fonts-unfonts-core
      ```
-  5. 라즈베리파이 Reboot를 하여 한글이 잘 나타나는지 확인한다.
+  5. 라즈베리파이 Reboot를 하여 한글이 잘 나타나는지 확인한다.  
      <img src="https://user-images.githubusercontent.com/66783849/194889663-b416b717-6f43-475e-a389-ccb6fee2d22d.png" width="40%">
 
 <br><br><br>
@@ -108,15 +108,15 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
      192.168.0.69
      ```
   4. 원격 데스크톱에서 연결할 컴퓨터에서 "원격 데스크톱"을 실행한다.  
-     <img src="https://user-images.githubusercontent.com/66783849/194879592-e5a59d93-3c8e-470e-b41e-6b8de34cc57b.png" width="70%">  
+     <img src="https://user-images.githubusercontent.com/66783849/194879592-e5a59d93-3c8e-470e-b41e-6b8de34cc57b.png" width="50%">  
      IP 주소를 입력 후 "옵션 표시(O)"를 클릭하여 자세한 사항을 설정한다.  
-     <img src="https://user-images.githubusercontent.com/66783849/194879459-bd7fb4b5-f5cd-4927-aeb1-d2cdbc8968f8.png" width="70%">  
+     <img src="https://user-images.githubusercontent.com/66783849/194879459-bd7fb4b5-f5cd-4927-aeb1-d2cdbc8968f8.png" width="50%">  
   5. 원격 데스크톱 연결할 대상에 Raspberry-Pi 사용자 이름을 넣는다.
   6. 이후 연결을 눌러 비밀번호를 눌러 원격 접속이 됨을 확인한다.  
-     <img src="https://user-images.githubusercontent.com/66783849/194880213-dd565dcf-edc1-4b5b-b84c-fcda5bf98df2.png" width="70%">
+     <img src="https://user-images.githubusercontent.com/66783849/194880213-dd565dcf-edc1-4b5b-b84c-fcda5bf98df2.png" width="50%">
      [‼만일 실패하거나 이상이 있을 경우 30초 정도가 지난 뒤에 나타나니, 기다려보자]
 - 다음 에러와 같이 한 아이디로 여러 기기에서 동시 접속불가능한 경우 유저 아이디를 만든다.  
-  <img src="https://user-images.githubusercontent.com/66783849/194885388-6adf58c6-dde0-404d-b699-6389cad8d55c.png" width="70%">  
+  <img src="https://user-images.githubusercontent.com/66783849/194885388-6adf58c6-dde0-404d-b699-6389cad8d55c.png" width="40%">  
   1. 다음 명령어를 터미널에 입력하여 아이디를 만든다.
      ```bash
      sudo adduser sagijju
