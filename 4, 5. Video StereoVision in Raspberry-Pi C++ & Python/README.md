@@ -84,7 +84,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
      sudo apt-get install fonts-unfonts-core
      ```
   5. 라즈베리파이 Reboot를 하여 한글이 잘 나타나는지 확인한다.
-     <img src="https://user-images.githubusercontent.com/66783849/194889663-b416b717-6f43-475e-a389-ccb6fee2d22d.png" width="70%">
+     <img src="https://user-images.githubusercontent.com/66783849/194889663-b416b717-6f43-475e-a389-ccb6fee2d22d.png" width="40%">
 
 <br><br><br>
 
