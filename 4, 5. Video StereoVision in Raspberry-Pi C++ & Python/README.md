@@ -173,20 +173,67 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
    ```bash
    sudo ./pi_cam_uc444.sh
    ```
-- 이를 통해 카메라의 인식 여부를 확인한다.
+- 이를 통해 카메라의 인식 여부를 확인한다.  
+  <img src="https://user-images.githubusercontent.com/66783849/195839241-978dc7e7-d964-4faa-8dd3-6c8f4ff6f893.png" height="400"> <img src="https://user-images.githubusercontent.com/66783849/195839071-c83f249b-7b8d-4786-8be0-c348f479080a.png" height="400">
+  ```bash
+  > cd ~
+  > cd RaspberryPi/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444/shell
+  > sudo chmod +x pi_cam_uc444.sh
+  > sudo ./pi_cam_uc444.sh
+  
+  [sudo] sagijju의 암호: # 암호 입력
+  
+  Choose camera A
+  No protocol specified
+  Preview window unavailable
+  [0:01:36.107728611] [2251]  INFO Camera camera_manager.cpp:293 libcamera v0.0.0+3866-0c55e522
+  [0:01:36.153081243] [2252]  WARN RPI raspberrypi.cpp:1258 Mismatch between Unicam and CamHelper for embedded data usage!
+  [0:01:36.154023661] [2252]  INFO RPI raspberrypi.cpp:1374 Registered camera /base/soc/i2c0mux/i2c@1/imx219@10 to Unicam device /dev/media3 and ISP device /dev/media1
+  [0:01:36.154684637] [2251]  INFO Camera camera.cpp:1035 configuring streams: (0) 1640x1232-YUV420
+  [0:01:36.155054134] [2252]  INFO RPI raspberrypi.cpp:761 Sensor: /base/soc/i2c0mux/i2c@1/imx219@10 - Selected sensor format: 1640x1232-SBGGR10_1X10 - Selected unicam format: 1640x1232-pBAA
+  [0:01:41.301627280] [2251]  INFO Camera camera.cpp:1035 configuring streams: (0) 3280x2464-YUV420 (1) 3280x2464-SBGGR10_CSI2P
+  [0:01:41.306439326] [2252]  INFO RPI raspberrypi.cpp:761 Sensor: /base/soc/i2c0mux/i2c@1/imx219@10 - Selected sensor format: 3280x2464-SBGGR10_1X10 - Selected unicam format: 3280x2464-pBAA
+  Still capture image received
+  
+  Choose Camera B
+  No protocol specified
+  Preview window unavailable
+  [0:01:42.070916110] [2264]  INFO Camera camera_manager.cpp:293 libcamera v0.0.0+3866-0c55e522
+  [0:01:42.099557730] [2265]  WARN RPI raspberrypi.cpp:1258 Mismatch between Unicam and CamHelper for embedded data usage!
+  [0:01:42.100621502] [2265]  INFO RPI raspberrypi.cpp:1374 Registered camera /base/soc/i2c0mux/i2c@1/imx219@10 to Unicam device /dev/media3 and ISP device /dev/media1
+  [0:01:42.101433460] [2264]  INFO Camera camera.cpp:1035 configuring streams: (0) 1640x1232-YUV420
+  [0:01:42.102049494] [2265]  INFO RPI raspberrypi.cpp:761 Sensor: /base/soc/i2c0mux/i2c@1/imx219@10 - Selected sensor format: 1640x1232-SBGGR10_1X10 - Selected unicam format: 1640x1232-pBAA
+  [0:01:47.254229385] [2264]  INFO Camera camera.cpp:1035 configuring streams: (0) 3280x2464-YUV420 (1) 3280x2464-SBGGR10_CSI2P
+  [0:01:47.256323988] [2265]  INFO RPI raspberrypi.cpp:761 Sensor: /base/soc/i2c0mux/i2c@1/imx219@10 - Selected sensor format: 3280x2464-SBGGR10_1X10 - Selected unicam format: 3280x2464-pBAA
+  Still capture image received
+  Test OK
+  ```
 
 <br>
 
-
-### C++ 방법
+### Python version
 
 1. OpenCV Library를 다운받는다.
-   ```bash
-   sudo apt install libopencv-dev
+   ```Bash
+   sudo apt install -y python3-libcamera python3-kms++
+   sudo apt install -y python3-prctl libatlas-base-dev ffmpeg libopenjp2-7 python3-pip
+   pip3 install numpy --upgrade
+   pip3 install picamera2
    ```
 2. 컴파일 및 실행한다.
    ```bash
+   cd ~
    cd RaspberryPi/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444
+   make
+   python arducam_multi_adapter_uc444.py
+   ```
+3. For the use of remote control terminals, first specify the location of the image display
+   ```Bash
+   export DISPLAY=:0
+   python arducam_multi_adapter_uc444.py
+   ```
+4. For users who directly operate locally
+   ```Bash
    python arducam_multi_adapter_uc444.py
    ```
 3. 다음과 같이 데모창이 나타나는지 확인한다.
