@@ -146,13 +146,9 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 2. 스트레오 비전 카메라를 라즈베리 파이에 연결한다.  
   <img src="https://user-images.githubusercontent.com/66783849/194897502-83c679e8-787d-4e5c-86ca-5f9becd3ce18.png" width="300">  
 3. 다음과 같이 명령어를 입력한다.  
-
    ```bash
    git clone https://github.com/ArduCAM/RaspberryPi.git
    ```
-- 2가지 방법으로 이미지를 획득한다.
-
-<br>
 
 ### Terminal 방법
 
@@ -244,7 +240,91 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   - ssh를 통해 연결하면 디스플레이 창을 window에 띄우는게 가능한데, 자세한건 다음 사이트를 참고한다.
 <img src="https://user-images.githubusercontent.com/66783849/195968466-3d5781d2-2925-46da-93d5-aac7e5173ebf.png" width="250">
 
+<br><br>
+
+## RaspberryPi C++, Python 실행
+
+- RaspberryPi에서 C++, Python을 컴파일하고 실행해본다.
+
+### C++ on RaspberryPi
+
+- RaspberryPi에서 폴더를 열어 hello.cpp라는 파일을 만든 후 아래와 같이 작성한다.
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  
+  int main()
+  {
+     cout << "Hello RaspberryPi in C++" << endl;
+     return 0;
+  }
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/195969413-dbc2bead-4dbc-4595-916c-9975f51646c5.png" width="350">
+- Terminal로 hello.cpp 를 만든 폴더 위치로 이동한 다음 다음과 같이 명령어를 입력한다.
+  ```bash
+  g++ -o hello hello.cpp
+  ```
+- 이후 만들어진 hello를 실행한다.
+  ```bash
+  ./hello
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/195969449-d520493f-e76a-469a-a7d1-680820b4e178.png" width="350">
+- 참조 : [Getting Started with C++ on Raspberry Pi (Guide & examples)](https://raspberrytips.com/use-c-on-raspberry-pi/)
+
+<br>
+
+### Python on RaspberryPi
+
+- Python은 커맨드로 작성이 가능하다. (또는 vi로 문서를 만든 후 실행시킨다)
+- <kbd>Ctrl</kbd>+<kbd>D</kbd>를 통해 빠져나온다.
+  ```bash
+  $ python
+  
+  Python 3.9.2 (default, Mar 12 2021, 04:06:34) 
+  [GCC 10.2.1 20210110] on linux
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> print("hello")
+  hello
+  >>>
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/195969530-f65812c9-be86-47ed-8fa9-572909f24596.png" width="400">
+- 하지만 문서로 작성하여 보다 편하고 빠르게 작업한다.
+- RaspberryPi에서 폴더를 열어 hello.py라는 파일을 만든 후 아래와 같이 작성한다.
+  ```python
+  print("Hello, RaspberryPI in Python")
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/195969621-e12ac22d-cf12-4661-b4cc-8e85945a1b52.png" width="350">
+- Terminal로 hello.py 를 만든 폴더 위치로 이동한 다음 다음과 같이 명령어를 입력한다.
+  ```bash
+  $ python hello.py
+
+  Hello, RaspberryPI in Python
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/195969660-356ccc06-6079-476b-afc4-2cb7e9fa6e0d.png" width="350">
+- 참조 : [[라즈베리파이] 라즈비안 안에서 python 사용하기](https://m.blog.naver.com/dokkosam/221868691692)
+
+<br><br>
+
+## StereoVision 이미지 획득
+
+- StereoVision의 이미지를 획득하기 위해서 기존에 진행했었던 C++, Python 코드를 GitClone하여 받아 참고하면서 만든다.
+- 이때 코드는 사진을 변환하는 예제이기 때문에, 영상을 출력하는 예제로 변환하는 작업을 진행한다.
+
+### C++
+
+- RaspberryPi C++ 코드를 다음과 같이 작성한다.
+
+<br>
+
+### python
+
+
+
 <br><br><br>
+
+#
+
+##
 
 ## 참고
 
