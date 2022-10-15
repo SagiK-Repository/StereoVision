@@ -310,9 +310,124 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 - StereoVision의 이미지를 획득하기 위해서 기존에 진행했었던 C++, Python 코드를 GitClone하여 받아 참고하면서 만든다.
 - 이때 코드는 사진을 변환하는 예제이기 때문에, 영상을 출력하는 예제로 변환하는 작업을 진행한다.
 
-### C++
+### C++ 기본
 
-- RaspberryPi C++ 코드를 다음과 같이 작성한다.
+- RaspberryPi C++ 코드를 다음과 같이 작성한다.  
+- 우선, 다양한 StereoVision 기법이 존재하기에, 입력별로 다른 기법이 진행될 수 있도록 다음과 같이 구성한다.
+  ```cpp
+  // get_argv_test.cpp
+
+  #include <iostream>
+  using namespace std;
+    
+  int main(int argc, char *argv[])
+  {
+     cout << "Hello RaspberryPi in C++" << endl;
+     cout << argv[1] << endl;
+     return 0;
+  }
+  
+  // g++ -o get_argv_test "get_argv_test.cpp"
+  // ./get_argv_test hello
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/195970125-a9012221-14d9-4b83-883f-f6b3d4607fe8.png" width="350">
+- 이후, OpenCV가 정상적으로 동작하는지 Test를 한다.
+
+<br>
+
+### C++ OpenCV
+
+- OpenCV를 연동하기 위해서는 다음과 같이 Terminal에 기본적인 환경을 설정한다.
+- opencv를 설치하는 과정이 너무 복잡하니, 자세한 설치 방법과 과정은 다음 사이트를 참고한다.
+  - [openCV[1] - 라즈베리파이에 openCV 설치하기](https://bebutae.tistory.com/153)
+  - [Install OpenCV 4 on Raspberry Pi for C++ and Python development](https://solarianprogrammer.com/2019/09/17/install-opencv-raspberry-pi-raspbian-cpp-python-development/)
+  - [OpenCV with c++ in a Raspberry Pi 3](https://forums.raspberrypi.com/viewtopic.php?t=284300)
+- 다음 사이트를 통해 최신 OpenCV의 버전을 링크를 받아 아래 opencv.zip 파일의 링크를 수정한다.
+  - https://opencv.org/releases/
+- OpenCV Contrib 버전도 Opencv와 버전이 동일하도록 링크를 수정한다.(예-4.6.0zip)
+  ```bash
+  sudo apt-get -y update upgrade\
+  build-essential cmake \
+  libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev \
+  libavcodec-dev libavformat-dev libswscale-dev libxvidcore-dev libx264-dev libxine2-dev \
+  libv4l-dev v4l-utils \
+  libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+  libgtk2.0-dev \
+  mesa-utils libgl1-mesa-dri libgtkgl2.0-dev libgtkglext1-dev \
+  libatlas-base-dev gfortran libeigen3-dev \
+  python2.7-dev python3-dev python-numpy python3-numpy \
+
+  cd ~
+  mkdir opencv
+  cd opencv
+  wget -O opencv.zip https://github.com/opencv/opencv/archive/4.6.0.zip
+  unzip opencv.zip
+  cd opencv-4.1.2
+  mkdir build
+  cd build
+  cmake -D CMAKE_BUILD_TYPE=RELEASE \
+  -D CMAKE_INSTALL_PREFIX=/usr/local \
+  -D WITH_TBB=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_1394=OFF \
+  -D BUILD_WITH_DEBUG_INFO=OFF \
+  -D BUILD_DOCS=OFF \
+  -D INSTALL_C_EXAMPLES=ON \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_EXAMPLES=OFF \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PERF_TESTS=OFF \
+  -D ENABLE_NEON=ON \
+  -D ENABLE_VFPV3=ON \
+  -D WITH_QT=OFF \
+  -D WITH_GTK=ON \
+  -D WITH_OPENGL=ON \
+  -D OPENCV_ENABLE_NONFREE=ON \
+  -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.1.2/modules \
+  -D WITH_V4L=ON \
+  -D WITH_FFMPEG=ON \
+  -D WITH_XINE=ON \
+  -D ENABLE_PRECOMPILED_HEADERS=OFF \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D OPENCV_GENERATE_PKGCONFIG=ON ../
+  # sudo nano /etc/dphys-swapfile # CONF_SWAPSIZE=100으로 수정
+  # sudo /etc/init.d/dphys-swapfile restart
+  ```
+- 그리고 다음과 같이 카메라를 연결해보는 Test 코드를 작성한다.
+  ```cpp
+  #include "opencv2/opencv.hpp"
+  using namespace cv;
+  int main(int argc, char** argv)
+  {
+      VideoCapture cap;
+      // open the default camera, use something different from 0 otherwise;
+      // Check VideoCapture documentation.
+      if(!cap.open(0))
+          return 0;
+      for(;;)
+      {
+            Mat frame;
+            cap >> frame;
+            if( frame.empty() ) break; // end of video stream
+            imshow("this is you, smile! :)", frame);
+            if( (waitKey(10)%256) == 27 ) break; // waitKeypatch: check for 10ms: then stop capturing by pressing ESC=27
+      }
+      // the camera will be closed automatically upon exit
+      cap.close();
+      return 0;
+  }
+  
+  // gcc -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core -lstdc++
+  // g++ -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core
+  // ./opencv_camera_test
+  ```
+- 이때, 컴파일을 다음과 같이 진행한다.
+  ```bash
+  gcc -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core -lstdc++
+
+  # 또는
+  g++ -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core
+  ```
 
 <br>
 
