@@ -174,7 +174,8 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
    sudo ./pi_cam_uc444.sh
    ```
 - 이를 통해 카메라의 인식 여부를 확인한다.  
-  <img src="https://user-images.githubusercontent.com/66783849/195839241-978dc7e7-d964-4faa-8dd3-6c8f4ff6f893.png" height="400"> <img src="https://user-images.githubusercontent.com/66783849/195839071-c83f249b-7b8d-4786-8be0-c348f479080a.png" height="400">
+  <img src="https://user-images.githubusercontent.com/66783849/195839241-978dc7e7-d964-4faa-8dd3-6c8f4ff6f893.png" height="400"> <img src="https://user-images.githubusercontent.com/66783849/195839071-c83f249b-7b8d-4786-8be0-c348f479080a.png" height="400">  
+  <img src="https://user-images.githubusercontent.com/66783849/195847108-d9ed1b17-6278-4fe3-ab00-9193d743b946.png" width="350">
   ```bash
   > cd ~
   > cd RaspberryPi/Multi_Camera_Adapter/Multi_Adapter_Board_2Channel_uc444/shell
@@ -211,8 +212,9 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 
 <br>
 
-### Python version
+### Python version (RaspberryPi Direct Display)
 
+- 이 방법은 실시간으로 카메라 영상을 받을 수 있지만, 원격데스크톱과 같은 연결에서는 확인이 어렵다. 떄문에 RaspberryPi를 직접 연결한 모니터에서 테스트해본다.
 1. OpenCV Library를 다운받는다.
    ```Bash
    sudo apt install -y python3-libcamera python3-kms++
@@ -237,6 +239,10 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
    python arducam_multi_adapter_uc444.py
    ```
 3. 다음과 같이 데모창이 나타나는지 확인한다.
+- [‼ 오류 qt.qpa.xcb: could not connect to display :0]
+  - 원격데스크톱의 경우, 연결이 어렵다.
+  - ssh를 통해 연결하면 디스플레이 창을 window에 띄우는게 가능한데, 자세한건 다음 사이트를 참고한다.
+<img src="https://user-images.githubusercontent.com/66783849/195968466-3d5781d2-2925-46da-93d5-aac7e5173ebf.png" width="250">
 
 <br><br><br>
 
