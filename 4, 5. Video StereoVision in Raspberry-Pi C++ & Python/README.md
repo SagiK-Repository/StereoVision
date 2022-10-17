@@ -337,6 +337,38 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 
 ### C++ OpenCV
 
+- OpenCV를 CPP로 연동하기 위해서 다음과 같이 Linux에서 OpenCV를 구현하는 것을 활용한다.
+- 다음과 같이 기본적인 환경을 설정한다. (C++ 컴파일러, git, CMake, make 등등)
+  ```bash
+  sudo apt install -y g++ cmake make git libgtk2.0-dev pkg-config
+  ```
+- [opencv git 주소](https://github.com/opencv/opencv)로 가서 git 링크를 받아온다.
+- 이후 git clone을 진행한다.
+  - 이때, 붙여넣기는 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>를 활용한다.
+  ```bash
+  cd ~ && git clone https://github.com/opencv/opencv.git
+  ```
+- Build the source 공간을 만든다.
+  ```bash
+  mkdir -p build && cd build
+  ```
+- OpneCV를 컴파일(cmake)한다.
+  ```bash
+  cmake ../opencv
+  make -j4
+  # 상당히 오래 걸린다.
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/195997441-48e58c1d-05ef-4cb0-ac76-ee75dfb87fb4.png" width="450">
+- OpenCV Package를 Install한다.
+  ```bash
+  sudo make install
+  ```
+- "/usr/local/include/opencv4"에 opencv4가 설치됨을 확인한다.
+- 참조
+  - [How to Install opencv in C++ on Linux?](https://www.geeksforgeeks.org/how-to-install-opencv-in-c-on-linux/)
+
+
+
 - OpenCV를 연동하기 위해서는 다음과 같이 Terminal에 기본적인 환경을 설정한다.
 - opencv를 설치하는 과정이 너무 복잡하니, 자세한 설치 방법과 과정은 다음 사이트를 참고한다.
   - [openCV[1] - 라즈베리파이에 openCV 설치하기](https://bebutae.tistory.com/153)
