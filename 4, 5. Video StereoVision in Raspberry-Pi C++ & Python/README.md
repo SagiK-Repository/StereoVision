@@ -4,10 +4,11 @@
 1. [Video StereoVision in Raspberry-Pi C++ & Python]
 2. [Raspberry-Pi 환경 설정]
 3. [Raspberry-Pi 원격 조종 설정]
-4. [StereoVision 이미지 획득]
-5. [StereoVision in C++]
-6. [StereoVision in Python]
-7. [StereoVision 결과]
+4. [StereoVision 이미지 획득 - C++]
+5. [StereoVision 이미지 획득 - Python]
+6. [StereoVision in C++]
+7. [StereoVision in Python]
+8. [StereoVision 결과]
 
 <br><br><br>
 
@@ -142,6 +143,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 ## 스트레오 카메라 연결 및 환경설정
 
 1. 왼쪽 상단 라즈베리 파이 아이콘 > Preferences -> Raspberry pi Configuration 실행 -> Interfaces -> I2C: -> Enable 선택  
+   - 이는 StereoVision 카메라 분배기가 I2C 통신을 하기 때문에 설정한다.  
   <img src="https://user-images.githubusercontent.com/66783849/194901722-965a700f-0603-4227-809c-93445b2d7094.png" width="300">  
 2. 스트레오 비전 카메라를 라즈베리 파이에 연결한다.  
   <img src="https://user-images.githubusercontent.com/66783849/194897502-83c679e8-787d-4e5c-86ca-5f9becd3ce18.png" width="300">  
@@ -237,7 +239,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 3. 다음과 같이 데모창이 나타나는지 확인한다.
 - [‼ 오류 qt.qpa.xcb: could not connect to display :0]
   - 원격데스크톱의 경우, 연결이 어렵다.
-  - ssh를 통해 연결하면 디스플레이 창을 window에 띄우는게 가능한데, 자세한건 다음 사이트를 참고한다.
+  - ssh를 통해 연결하면 디스플레이 창을 window에 띄우는게 가능한데, 자세한건 다음 사이트를 참고한다.  
 <img src="https://user-images.githubusercontent.com/66783849/195968466-3d5781d2-2925-46da-93d5-aac7e5173ebf.png" width="250">
 
 <br><br>
@@ -305,7 +307,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 
 <br><br>
 
-## StereoVision 이미지 획득
+## StereoVision 이미지 획득 - C++
 
 - StereoVision의 이미지를 획득하기 위해서 기존에 진행했었던 C++, Python 코드를 GitClone하여 받아 참고하면서 만든다.
 - 이때 코드는 사진을 변환하는 예제이기 때문에, 영상을 출력하는 예제로 변환하는 작업을 진행한다.
@@ -331,7 +333,6 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   // ./get_argv_test hello
   ```
   <img src="https://user-images.githubusercontent.com/66783849/195970125-a9012221-14d9-4b83-883f-f6b3d4607fe8.png" width="350">
-- 이후, OpenCV가 정상적으로 동작하는지 Test를 한다.
 
 <br>
 
@@ -357,113 +358,142 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   cmake ../opencv
   make -j4
   # 상당히 오래 걸린다.
+  # 만일 opencv 내부의 디렉토리의 빌드가 오래걸린다면, 디렉토리를 제외시키고(다른데 옮겨놓자) 다시빌드한다.
   ```
   <img src="https://user-images.githubusercontent.com/66783849/195997441-48e58c1d-05ef-4cb0-ac76-ee75dfb87fb4.png" width="450">
 - OpenCV Package를 Install한다.
   ```bash
   sudo make install
   ```
-- "/usr/local/include/opencv4"에 opencv4가 설치됨을 확인한다.
+  <img src="https://user-images.githubusercontent.com/66783849/196418075-cd29f8cf-7e9b-4cbd-a7c2-bfac2aac11d5.png" width="450">  
+  <img src="https://user-images.githubusercontent.com/66783849/196418121-1575d2bd-bb78-43c5-9c02-b0c6d95a3d12.png" width="450">
+- "/usr/local/include/opencv4"에 opencv4가 설치됨을 확인한다.  
+  <img src="https://user-images.githubusercontent.com/66783849/196419175-c0f16a67-be48-4b53-8b1c-0bfed890b8b9.png" width="450">
+- Test는 다음과 같이 진행한다.
+  ```bash
+  # Test를 진행할 폴더를 구성한다.
+  mkdir test && cd test
+  
+  # cpp 문서를 만든다. (nano 또는 vi 사용)
+  nano DisplayImage.cpp
+  ```
+- DisplayImage.cpp에 다음 내용을 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>를 통해 넣는다.
+  ```cpp
+  #include <opencv2/opencv.hpp>
+  #include <stdio.h>
+  using namespace cv;
+  int main(int argc, char** argv)
+  {
+      if (argc != 2) {
+          printf("usage: DisplayImage.out <Image_Path>\n");
+          return -1;
+      }
+      Mat image;
+      image = imread(argv[1], 1);
+      if (!image.data) {
+          printf("No image data \n");
+          return -1;
+      }
+      namedWindow("Display Image", WINDOW_AUTOSIZE);
+      imshow("Display Image", image);
+      waitKey(0);
+      return 0;
+  }
+  ```
+- 그리고 다음 CMakeLists.txt를 만들어 다음과 같은 내용을 넣는다.
+  ```bash
+  nano CMakeLists.txt
+  ```
+  ```bash
+  cmake_minimum_required(VERSION 2.8)
+  project( DisplayImage )
+  find_package( OpenCV REQUIRED )
+  include_directories( ${OpenCV_INCLUDE_DIRS} )
+  add_executable( DisplayImage DisplayImage.cpp )
+  target_link_libraries( DisplayImage ${OpenCV_LIBS} )
+  ```
+- 그리고 이어서 cmake를 통해 빌드 파일을 생성한다.
+  ```bash
+  cmake .
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/196420932-4652fdd3-1d13-44c7-bbdf-91afbeba4ec9.png" width="350">
+- 마지막으로 다음 명령으로 make를 사용하여 프로그램을 빌드한다.
+  ```bash
+  make
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/196421477-da7b21fa-d9e7-4758-9f0e-b993cad0b78c.png" width="450">
+- 다음 명령을 통해 이미지 띄우는 테스트를 해본다.
+  ```bash
+  ./DisplayImage path_of_the_image
+
+  # 예
+  ./DisplayImage path_of_the_image
+  ```
 - 참조
   - [How to Install opencv in C++ on Linux?](https://www.geeksforgeeks.org/how-to-install-opencv-in-c-on-linux/)
 
 
 
-- OpenCV를 연동하기 위해서는 다음과 같이 Terminal에 기본적인 환경을 설정한다.
-- opencv를 설치하는 과정이 너무 복잡하니, 자세한 설치 방법과 과정은 다음 사이트를 참고한다.
-  - [openCV[1] - 라즈베리파이에 openCV 설치하기](https://bebutae.tistory.com/153)
-  - [Install OpenCV 4 on Raspberry Pi for C++ and Python development](https://solarianprogrammer.com/2019/09/17/install-opencv-raspberry-pi-raspbian-cpp-python-development/)
-  - [OpenCV with c++ in a Raspberry Pi 3](https://forums.raspberrypi.com/viewtopic.php?t=284300)
-- 다음 사이트를 통해 최신 OpenCV의 버전을 링크를 받아 아래 opencv.zip 파일의 링크를 수정한다.
-  - https://opencv.org/releases/
-- OpenCV Contrib 버전도 Opencv와 버전이 동일하도록 링크를 수정한다.(예-4.6.0zip)
-  ```bash
-  sudo apt-get -y update upgrade\
-  build-essential cmake \
-  libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev \
-  libavcodec-dev libavformat-dev libswscale-dev libxvidcore-dev libx264-dev libxine2-dev \
-  libv4l-dev v4l-utils \
-  libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
-  libgtk2.0-dev \
-  mesa-utils libgl1-mesa-dri libgtkgl2.0-dev libgtkglext1-dev \
-  libatlas-base-dev gfortran libeigen3-dev \
-  python2.7-dev python3-dev python-numpy python3-numpy \
+<br>
 
-  cd ~
-  mkdir opencv
-  cd opencv
-  wget -O opencv.zip https://github.com/opencv/opencv/archive/4.6.0.zip
-  unzip opencv.zip
-  cd opencv-4.1.2
-  mkdir build
-  cd build
-  cmake -D CMAKE_BUILD_TYPE=RELEASE \
-  -D CMAKE_INSTALL_PREFIX=/usr/local \
-  -D WITH_TBB=OFF \
-  -D WITH_IPP=OFF \
-  -D WITH_1394=OFF \
-  -D BUILD_WITH_DEBUG_INFO=OFF \
-  -D BUILD_DOCS=OFF \
-  -D INSTALL_C_EXAMPLES=ON \
-  -D INSTALL_PYTHON_EXAMPLES=ON \
-  -D BUILD_EXAMPLES=OFF \
-  -D BUILD_TESTS=OFF \
-  -D BUILD_PERF_TESTS=OFF \
-  -D ENABLE_NEON=ON \
-  -D ENABLE_VFPV3=ON \
-  -D WITH_QT=OFF \
-  -D WITH_GTK=ON \
-  -D WITH_OPENGL=ON \
-  -D OPENCV_ENABLE_NONFREE=ON \
-  -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.1.2/modules \
-  -D WITH_V4L=ON \
-  -D WITH_FFMPEG=ON \
-  -D WITH_XINE=ON \
-  -D ENABLE_PRECOMPILED_HEADERS=OFF \
-  -D BUILD_NEW_PYTHON_SUPPORT=ON \
-  -D OPENCV_GENERATE_PKGCONFIG=ON ../
-  # sudo nano /etc/dphys-swapfile # CONF_SWAPSIZE=100으로 수정
-  # sudo /etc/init.d/dphys-swapfile restart
-  ```
-- 그리고 다음과 같이 카메라를 연결해보는 Test 코드를 작성한다.
-  ```cpp
-  #include "opencv2/opencv.hpp"
-  using namespace cv;
-  int main(int argc, char** argv)
-  {
-      VideoCapture cap;
-      // open the default camera, use something different from 0 otherwise;
-      // Check VideoCapture documentation.
-      if(!cap.open(0))
-          return 0;
-      for(;;)
-      {
-            Mat frame;
-            cap >> frame;
-            if( frame.empty() ) break; // end of video stream
-            imshow("this is you, smile! :)", frame);
-            if( (waitKey(10)%256) == 27 ) break; // waitKeypatch: check for 10ms: then stop capturing by pressing ESC=27
-      }
-      // the camera will be closed automatically upon exit
-      cap.close();
-      return 0;
-  }
-  
-  // gcc -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core -lstdc++
-  // g++ -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core
-  // ./opencv_camera_test
-  ```
-- 이때, 컴파일을 다음과 같이 진행한다.
-  ```bash
-  gcc -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core -lstdc++
+### pi_cam_uc444.sh 분석
 
-  # 또는
-  g++ -o opencv_camera_test opencv_camera_test.cpp -lopencv_highgui -lopencv_core
+- pi_cam_uc444.sh의 내용은 다음과 같다.
+  ```bash
+  #!/bin/sh
+  raspi-gpio set 4 op # GPIO 4 OUTPUT
+  raspi-gpio set 17 op # GPIO 17 OUTPUT
+  i2cset -y 1 0x70 0x00 0x01 # I2C 통신 - 0x70에 0x00 0x01 전송
+  # i2cset
+  # i2cset은 I2C 버스를 통해 볼 수 있는 레지스터를 설정하는 프로그램
+  # -y 대화식 모드를 비활성화
+  # 1 : 스캔할 I2C 버스의 번호 또는 이름
+  # 0x70 : 버스의 칩 주소를 지정
+  # 0x00 : 쓸 칩의 주소를 지정
+  # 0x01 : 지정된 경우 칩의 해당 위치에 쓸 값
+  raspi-gpio set 17 dl #set the gpio17 low
+  raspi-gpio set  4 dl #set the gpio4 low
+  echo "Choose camera A"
+  libcamera-still -o camera1.jpg # 촬영 (기본 5초뒤 촬영)
+  i2cset -y 1 0x70 0x00 0x02
+  raspi-gpio set 17 dl #set the gpio17 low
+  raspi-gpio set  4 dh #set the gpio4 high
+  echo "Choose Camera B"
+  libcamera-still -o camera2.jpg
+  echo "Test OK"
+  ```
+- 이를 다음과 같이 축약할 수 있다.
+  ```bash
+  #!/bin/sh
+  raspi-gpio set 4 op dl
+  raspi-gpio set 17 op dl
+  i2cset -y 1 0x70 0x00 0x01 
+  echo "Choose camera A"
+  libcamera-still -t 1 -o camera1.jpg # 0.001초뒤 촬영
+  i2cset -y 1 0x70 0x00 0x02
+  raspi-gpio set  4 dh #set the gpio4 high
+  echo "Choose Camera B"
+  libcamera-still -t 1 -o camera2.jpg
+  echo "Test OK"
   ```
 
 <br>
 
-### python
+### C++ OpenCV 활용한 영상 출력
+
+
+<br><br>
+
+
+## StereoVision 이미지 획득 - Python
+
+<br>
+
+### arducam_multi_adapter_uc444.py 분석
+
+<br>
+
+### Python 활용한 영상 출력
 
 
 
