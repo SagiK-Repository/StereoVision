@@ -147,7 +147,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   <img src="https://user-images.githubusercontent.com/66783849/194901722-965a700f-0603-4227-809c-93445b2d7094.png" width="300">  
 2. 스트레오 비전 카메라를 라즈베리 파이에 연결한다.  
   <img src="https://user-images.githubusercontent.com/66783849/194897502-83c679e8-787d-4e5c-86ca-5f9becd3ce18.png" width="300">  
-3. 다음과 같이 명령어를 입력한다.  
+3. 다음과 같이 명령어를 입력한다.   
    ```bash
    git clone https://github.com/ArduCAM/RaspberryPi.git
    ```
@@ -490,6 +490,180 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 <br>
 
 ### arducam_multi_adapter_uc444.py 분석
+
+- python에서 실시간 영상에 대해서 필요한 부분만 추려내면 다음과 같다.
+  ```python
+  import numpy as np
+  from picamera2 import Picamera2
+  from PyQt5.QtGui import QImage,QPixmap
+  from PyQt5.QtCore import QThread,Qt
+  import RPi.GPIO as gp
+  import time
+  import os
+  
+  width = 320
+  height = 240 
+  
+  adapter_info = {  
+      "A" : {   
+          "i2c_cmd":"i2cset -y 10 0x70 0x00 0x01",
+          "gpio_sta":[0,0],
+      }, "B" : {
+          "i2c_cmd":"i2cset -y 10 0x70 0x00 0x02",
+          "gpio_sta":[1,0],
+      }
+  }
+  picam2 = Picamera2()
+  
+  class WorkThread(QThread):
+  
+      def __init__(self):
+          super(WorkThread,self).__init__()
+          gp.setwarnings(False)
+          gp.setmode(gp.BOARD)
+          gp.setup(7, gp.OUT)
+          gp.setup(11, gp.OUT)
+  
+      def select_channel(self,index):
+          channel_info = adapter_info.get(index)
+          if channel_info == None:
+              print("Can't get this info")
+          gpio_sta = channel_info["gpio_sta"] # gpio write
+          gp.output(7, gpio_sta[0])
+          gp.output(11, gpio_sta[1])
+  
+      def init_i2c(self,index):
+          channel_info = adapter_info.get(index)
+          os.system(channel_info["i2c_cmd"]) # i2c write
+  
+      def run(self):
+          global picam2
+          flag = False
+          for item in {"A","B"}:
+              try:
+                  self.select_channel(item)
+                  self.init_i2c(item)
+                  time.sleep(0.5) 
+                  picam2.close()
+                  print("init1 "+ item)
+                  picam2 = Picamera2()
+                  picam2.configure(picam2.create_still_configuration(main={"size": (320, 240),"format": "BGR888"},buffer_count=2)) 
+                  picam2.start()
+                  picam2.set_controls({"AeEnable":False,"ExposureTime":30000,"AnalogueGain":6})
+                  time.sleep(2)
+                  picam2.capture_array("main",wait=True)
+                  time.sleep(0.1)
+              except Exception as e:
+                  print("except: "+str(e))
+  
+          while True:
+              for item in {"A","B"}:
+                  self.select_channel(item)
+                  time.sleep(0.02)
+                  try:
+                      buf = picam2.capture_array("main",wait=True)
+                      buf = picam2.capture_array("main",wait=True)
+                      cvimg = QImage(buf, width, height,QImage.Format_RGB888)
+                      pixmap = QPixmap(cvimg)
+                      if item == 'A':
+                          image_label.setPixmap(pixmap)
+                      elif item == 'B':
+                          image_label2.setPixmap(pixmap)
+                  except Exception as e:
+                      print("capture_buffer: "+ str(e))
+  
+  layout_h = QHBoxLayout()
+  layout_h1= QHBoxLayout()
+  image_label = QLabel()
+  image_label2 = QLabel()
+  
+  work = WorkThread()
+  
+  if __name__ == "__main__":
+      image_label.setFixedSize(320, 240)
+      image_label2.setFixedSize(320, 240)
+  
+      layout_h.addWidget(image_label)    
+      layout_h.addWidget(image_label2)
+  
+      work.start()
+      
+      app.exec()
+      work.quit()
+      picam2.close()
+  ```
+- 위 코드를 간단히 추리면 다음과 같다.
+  ```python
+
+  adapter_info = {  
+      "A" : {   
+          "i2c_cmd":"i2cset -y 10 0x70 0x00 0x01",
+          "gpio_sta":[0,0],
+      }, "B" : {
+          "i2c_cmd":"i2cset -y 10 0x70 0x00 0x02",
+          "gpio_sta":[1,0],
+      }
+  }
+  
+  ## raspberrypi에서 지원하는 카메라 획득 관련 객체
+  picam2 = Picamera2()
+  
+  ## GPIO 7, 11을 OUTPUT 모드로 설정한다.
+    def __init__(self):
+        super(WorkThread,self).__init__()
+        gp.setwarnings(False)
+        gp.setmode(gp.BOARD)
+        gp.setup(7, gp.OUT)
+        gp.setup(11, gp.OUT)
+  
+  ## A번 카메라, B번 카메라에 따라 출력을 달리 한다. (00, 01) 
+    def select_channel(self,index):
+        ## 생략
+        gp.output(7, gpio_sta[0])
+        gp.output(11, gpio_sta[1])
+
+  ## os.system을 통해 직접 cmd에 "i2cset -y 10 0x70 0x00 0x01" or "0x02"를 입력한다.
+    def init_i2c(self,index):
+        channel_info = adapter_info.get(index)
+        os.system(channel_info["i2c_cmd"]) # i2c write
+
+  ## Thread 실행시
+    def run(self):
+        global picam2
+        flag = False
+        for item in {"A","B"}:
+            try:
+                self.select_channel(item) ## GPIO 출력 설정
+                self.init_i2c(item) ## i2cset 명령어 실행
+                time.sleep(0.5)  ## 0.5초의 휴식기간
+                picam2.close()   ## 카메라 종료
+                print("init1 "+ item) 
+                picam2 = Picamera2() ## 새로운 카메라 객체 선언
+                picam2.configure(picam2.create_still_configuration(main={"size": (320, 240),"format": "BGR888"},buffer_count=2))  ## 카메라 속성 설정
+                picam2.start() ## 카메라 시작
+                picam2.set_controls({"AeEnable":False,"ExposureTime":30000,"AnalogueGain":6}) ## 카메라 제어
+                time.sleep(2) ## 2ms 대기
+                picam2.capture_array("main",wait=True) ## 캡쳐 테스트
+                time.sleep(0.1) ## 0.1ms 대기
+            except Exception as e:
+                print("except: "+str(e))
+
+        while True: ## 반복문 돌입
+            for item in {"A","B"}:
+                self.select_channel(item) ## GPIO 출력 설정
+                time.sleep(0.02) ## 0.02초 휴식
+                try:
+                    buf = picam2.capture_array("main",wait=True)
+                    buf = picam2.capture_array("main",wait=True)
+                    cvimg = QImage(buf, width, height,QImage.Format_RGB888)
+                    pixmap = QPixmap(cvimg)
+                    if item == 'A':
+                        image_label.setPixmap(pixmap)
+                    elif item == 'B':
+                        image_label2.setPixmap(pixmap)
+                except Exception as e:
+                    print("capture_buffer: "+ str(e))
+  ```
 
 <br>
 
