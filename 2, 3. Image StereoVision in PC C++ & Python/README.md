@@ -110,7 +110,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 PC에�
 <img src="https://user-images.githubusercontent.com/66783849/186562543-390c72d1-c068-490f-b3cc-51cb47d8441f.png" width="69%">
 
 - Stereo Vision을 위한 이미지 샘플을 획득한다.
-
+- [StreoVision Image](https://github.com/SagiK-Repository/StereoVision/tree/main/2%2C%203.%20Image%20StereoVision%20in%20PC%20C%2B%2B%20%26%20Python/OpenCV%20Stereo%20Vision%20C%2B%2B/image)
 
 
 
