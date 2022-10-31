@@ -671,9 +671,20 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   - 하지만 sudo와 함께 python을 실행하면 opencv를 활용할 수 없다.
   - 따라서 user 계정에 root 권한을 주어 RPi 문제를 해결하고, opencv를 활용해보자.
   ```bash
+  # 원격 연결이 아닌경우, 생략
   id ## 내 계정의 상태 알아보기
+  sudo vi /etc/group # Group 설정
   ```
-  - 따라서 다음과 같이 계정의 접근 권한을 추가를 한다.
+  ```bash
+  # 원격 연결이 아닌경우, 생략
+  # i2c, gpio 뒤에 username을 추가한다. (예-juhyung1021, sagijju)
+  sudo:x:998:juhyung1021,sagijju
+  audio:x:998:juhyung1021,sagijju
+  video:x:998:juhyung1021,sagijju ## ssh 원격접근이 조금 느려진다
+  i2c:x:998:juhyung1021,sagijju
+  gpio:x:997:juhyung1021,sagijju
+  ```
+  - 다음과 같이 계정의 접근 권한을 추가를 한다.
   ```bash
   sudo -i
   # super user 리스트에 들어가기
@@ -688,7 +699,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   ```bash
   # sudo pip install opencv-python
   # root에서 실행
-  pip install opencv-contrib-python ## 메인 계정의 경우
+  # pip install opencv-contrib-python ## 메인 계정의 경우
   pip install opencv-python
   # 조금 시간이 걸린다.
   # 이후 python3를 입력후 impoty cv2를 통해 정상작동하는지 확인한다.
