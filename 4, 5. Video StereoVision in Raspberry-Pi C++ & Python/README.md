@@ -664,19 +664,39 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
                 except Exception as e:
                     print("capture_buffer: "+ str(e))
   ```
-- picamera2 캡쳐 이미지 값을 mat로 변환하여 가져오는 방식을 알아보면 다음과 같다.
-  - sudo가 없으면 메인 계정에는 설치가 안된다.
+- raspberr pi에서 opencv를 설치하기 위해 다음과 같은 과정을 거친다.
+  - opnecv를 설치하기 위해 sudo가 없으면 메인 계정에는 설치가 안된다.
   - 하지만 sudo pip install은 위험하다. [Sudo pip install은 안돼요!](https://medium.com/@chullino/sudo-%EC%A0%88%EB%8C%80-%EC%93%B0%EC%A7%80-%EB%A7%88%EC%84%B8%EC%9A%94-8544aa3fb0e7)
-  - 따라서 메인계정에서 다음과 같이 설치한다.
+  - sudo없이 python을 실행하면, 메인 계정이 아닌 경우, RPi를 활용할 수 없다.
+  - 하지만 sudo와 함께 python을 실행하면 opencv를 활용할 수 없다.
+  - 따라서 user 계정에 root 권한을 주어 RPi 문제를 해결하고, opencv를 활용해보자.
+  ```bash
+  id ## 내 계정의 상태 알아보기
+  ```
+  - 따라서 다음과 같이 계정의 접근 권한을 추가를 한다.
+  ```bash
+  sudo -i
+  # super user 리스트에 들어가기
+  sudo vi /etc/sudoers
+
+  # User Privilege specification 에 다음과 같이 작성한다.
+  root      ALL=(ALL:ALL) ALL
+  username  ALL=(ALL:ALL) NOPASSWD: ALL # super user로 등록
+  # esc 및 ":wq!"를 입력 후 저장한다.
+  ```
+  - 이어서 opencv를 설치 및 실행한다.
   ```bash
   # sudo pip install opencv-python
-  # 메인계정에서 실행
-  pip install opencv-contrib-python
+  # root에서 실행
+  pip install opencv-contrib-python ## 메인 계정의 경우
+  pip install opencv-python
+  # 조금 시간이 걸린다.
   # 이후 python3를 입력후 impoty cv2를 통해 정상작동하는지 확인한다.
   ```
+- picamera2 캡쳐 이미지 값을 mat로 변환하여 가져오는 방식을 알아보면 다음과 같다.
   ```python
   import cv2
-  image = picam2.array
+  image = picam2
   cv2.imshow('image', image)
   key = cv2.waitKey(1) & 0xff
   if key == 27 :
@@ -748,11 +768,10 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
               try:
                   buf = picam2.capture_array("main",wait=True) ## 이미지 가져오기 (캡쳐)
                   buf = picam2.capture_array("main",wait=True)
-                  image = buf.array
                   if item == 'A':
-                      cv2.imshow('A_image', image)
+                      cv2.imshow('A_image', buf)
                   elif item == 'B':
-                      cv2.imshow('B_image', image)
+                      cv2.imshow('B_image', buf)
                   key = cv2.waitKey(1) & 0xff
                   if key == 27 :
                     break
