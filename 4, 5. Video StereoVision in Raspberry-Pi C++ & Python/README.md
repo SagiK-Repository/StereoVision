@@ -604,7 +604,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
           "gpio_sta":[1,0],
       }
   }
-  
+
   ## raspberrypi에서 지원하는 카메라 획득 관련 객체
   picam2 = Picamera2()
   
@@ -653,16 +653,116 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
                 self.select_channel(item) ## GPIO 출력 설정
                 time.sleep(0.02) ## 0.02초 휴식
                 try:
+                    buf = picam2.capture_array("main",wait=True) ## 이미지 가져오기 (캡쳐)
                     buf = picam2.capture_array("main",wait=True)
-                    buf = picam2.capture_array("main",wait=True)
-                    cvimg = QImage(buf, width, height,QImage.Format_RGB888)
-                    pixmap = QPixmap(cvimg)
+                    cvimg = QImage(buf, width, height,QImage.Format_RGB888) ## 이미지 QImage로 변환
+                    pixmap = QPixmap(cvimg) ## Qimage를 QPixamap으로 전달
                     if item == 'A':
-                        image_label.setPixmap(pixmap)
+                        image_label.setPixmap(pixmap) ## A 카메라의 경우, 1번 화면에 출력
                     elif item == 'B':
-                        image_label2.setPixmap(pixmap)
+                        image_label2.setPixmap(pixmap) ## B 카메라의 경우, 2번 화면에 출력
                 except Exception as e:
                     print("capture_buffer: "+ str(e))
+  ```
+- picamera2 캡쳐 이미지 값을 mat로 변환하여 가져오는 방식을 알아보면 다음과 같다.
+  - sudo가 없으면 메인 계정에는 설치가 안된다.
+  - 하지만 sudo pip install은 위험하다. [Sudo pip install은 안돼요!](https://medium.com/@chullino/sudo-%EC%A0%88%EB%8C%80-%EC%93%B0%EC%A7%80-%EB%A7%88%EC%84%B8%EC%9A%94-8544aa3fb0e7)
+  - 따라서 메인계정에서 다음과 같이 설치한다.
+  ```bash
+  # sudo pip install opencv-python
+  # 메인계정에서 실행
+  pip install opencv-contrib-python
+  # 이후 python3를 입력후 impoty cv2를 통해 정상작동하는지 확인한다.
+  ```
+  ```python
+  import cv2
+  image = picam2.array
+  cv2.imshow('image', image)
+  key = cv2.waitKey(1) & 0xff
+  if key == 27 :
+    break
+  ```
+- 필요한 내용만 추려서 다음과 같이 실행할 수 있다.
+  ```python
+  import numpy as np
+  from picamera2 import Picamera2
+  import RPi.GPIO as gp
+  import time
+  import os
+  import cv2
+  
+  adapter_info = {  
+    "A" : {   
+        "i2c_cmd":"i2cset -y 10 0x70 0x00 0x01",
+        "gpio_sta":[0,0],
+    }, "B" : {
+        "i2c_cmd":"i2cset -y 10 0x70 0x00 0x02",
+        "gpio_sta":[1,0],
+    }
+  }
+
+  picam2 = Picamera2() ## raspberrypi에서 지원하는 카메라 획득 관련 객체
+  
+  ## GPIO 7, 11을 OUTPUT 모드로 설정한다.
+  gp.setwarnings(False)
+  gp.setmode(gp.BOARD)
+  gp.setup(7, gp.OUT)
+  gp.setup(11, gp.OUT)
+
+  ## A번 카메라, B번 카메라에 따라 출력을 달리 한다. (00, 01) 
+  def select_channel(index):
+      channel_info = adapter_info.get(index)
+      gpio_sta = channel_info["gpio_sta"] # gpio write
+      gp.output(7, gpio_sta[0])
+      gp.output(11, gpio_sta[1])
+
+  ## os.system을 통해 직접 cmd에 "i2cset -y 10 0x70 0x00 0x01" or "0x02"를 입력한다.
+  def init_i2c(index):
+      channel_info = adapter_info.get(index)
+      os.system(channel_info["i2c_cmd"]) # i2c write
+
+  ## Thread 실행시
+  def run():
+      global picam2
+      flag = False
+      for item in {"A","B"}:
+          try:
+              select_channel(item) ## GPIO 출력 설정
+              init_i2c(item) ## i2cset 명령어 실행
+              time.sleep(0.5)  ## 0.5초의 휴식기간
+              picam2.close()   ## 카메라 종료
+              print("init1 "+ item) 
+              picam2 = Picamera2() ## 새로운 카메라 객체 선언
+              picam2.configure(picam2.create_still_configuration(main={"size": (320, 240),"format": "BGR888"},buffer_count=2))  ## 카메라 속성 설정
+              picam2.start() ## 카메라 시작
+              picam2.set_controls({"AeEnable":False,"ExposureTime":30000,"AnalogueGain":6}) ## 카메라 제어
+              time.sleep(2) ## 2ms 대기
+              picam2.capture_array("main",wait=True) ## 캡쳐 테스트
+              time.sleep(0.1) ## 0.1ms 대기
+          except Exception as e:
+              print("except: "+str(e))
+      while True: ## 반복문 돌입
+          for item in {"A","B"}:
+              select_channel(item) ## GPIO 출력 설정
+              time.sleep(0.02) ## 0.02초 휴식
+              try:
+                  buf = picam2.capture_array("main",wait=True) ## 이미지 가져오기 (캡쳐)
+                  buf = picam2.capture_array("main",wait=True)
+                  image = buf.array
+                  if item == 'A':
+                      cv2.imshow('A_image', image)
+                  elif item == 'B':
+                      cv2.imshow('B_image', image)
+                  key = cv2.waitKey(1) & 0xff
+                  if key == 27 :
+                    break
+              except Exception as e:
+                  print("capture_buffer: "+ str(e))
+
+  run()
+  ```
+  ```bash
+  sudo python3 python_test.py
   ```
 
 <br>
