@@ -708,6 +708,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   ```python
   import cv2
   image = picam2
+  image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
   cv2.imshow('image', image)
   key = cv2.waitKey(1) & 0xff
   if key == 27 :
@@ -779,6 +780,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
               try:
                   buf = picam2.capture_array("main",wait=True) ## 이미지 가져오기 (캡쳐)
                   buf = picam2.capture_array("main",wait=True)
+                  buf = cv2.cvtColor(buf, cv2.COLOR_BGR2RGB)
                   if item == 'A':
                       cv2.imshow('A_image', buf)
                   elif item == 'B':
