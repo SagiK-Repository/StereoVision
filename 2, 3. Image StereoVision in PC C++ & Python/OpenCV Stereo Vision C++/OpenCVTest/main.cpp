@@ -116,8 +116,10 @@ int main() {
 	image_names.push_back("../image/toy_R.png");
 	image_names.push_back("../image/toys_L.png");
 	image_names.push_back("../image/toys_R.png");
+	image_names.push_back("../image/LL.png");
+	image_names.push_back("../image/RR.png");
 
-	Mat images[10];
+	Mat images[12];
 	for (int i = 0; i < image_names.size(); i++) {
 		images[i] = imread(image_names[i], 0);
 		CV_Assert(images[i].data);
@@ -126,7 +128,7 @@ int main() {
 	cout << " 이미지 " << image_names.size() << " 개 로딩 성공!" << endl << endl;
 
 	// Trackbar (Esc Key Next)
-	if (0) { 
+	if (1) { 
 		cout << "ESC Key to Next" << endl;
 
 		Mat StereoVision_Result_image;
@@ -148,7 +150,7 @@ int main() {
 		createTrackbar("disp12MaxDiff", "disparity", &disp12MaxDiff, 25, on_trackbar10);
 		createTrackbar("minDisparity", "disparity", &minDisparity, 25, on_trackbar11);
 
-		int n = 0;
+		int n = 10;
 		while (1) {
 
 			//stereot0->compute(images[n], images[n + 1], StereoVision_Result_image);
@@ -157,7 +159,7 @@ int main() {
 
 			imshow("disparity", StereoVision_Result_image);
 
-			if (waitKey(10) == 27) break; //esc key
+			if (waitKey(100) == 27) break; //esc key
 		}
 
 	}
