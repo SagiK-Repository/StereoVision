@@ -57,7 +57,7 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
 - 라즈베리 파이를 실행시키기 위해서는, 준비한 micro-SD카드에 Raspberry-Pi의 OS를 설치한다.
   1. [라즈베리 홈페이지](https://www.raspberrypi.com/software/)로 이동한다.
   2. [Download for Windows](https://downloads.raspberrypi.org/imager/imager_latest.exe)를 눌러 imager를 설치한다.
-  3. Raspberry Pi Imager를 실행하여 저장소 선택 후 운영체제(Raspberry-Pi OS FULL(32-BIT))를 선택한다.
+  3. Raspberry Pi Imager를 실행하여 저장소 선택 후 운영체제(Raspberry-Pi OS FULL(32-BIT))를 선택한다.  
      <img src="https://user-images.githubusercontent.com/66783849/194845184-58765031-2643-4d51-ada9-581398405b0d.png" width="60%">  
   4. 쓰기 버튼을 눌러 OS를 설치한다. 쓰기가 완료되었다는 창이 나오면 sd카드를 뺀다.
      <img src="https://user-images.githubusercontent.com/66783849/194847248-0b3d6b3d-134d-464a-b493-5b16c720f9a7.png" width="60%">  
@@ -794,14 +794,161 @@ Left, Right Image를 통해 C++ & Python 각각의 언어를 활용하여 Raspbe
   run()
   ```
   ```bash
-  sudo python3 python_test.py
+  python3 python_test.py
   ```
+  <img src="https://user-images.githubusercontent.com/66783849/199037541-244ed34c-176f-4b1e-ad13-5624c489294e.png" width="450">
 
 <br>
 
 ### Python 활용한 영상 출력
 
+- 다양한 버전별로 StereoVision을 Test한다.
+  ```python
+  def StereoBM(imgL,imgR, nD = 16, bS = 15) :
+    imgL = cv2.cvtColor(imgL,cv2.COLOR_RGB2GRAY)
+    imgR = cv2.cvtColor(imgR,cv2.COLOR_RGB2GRAY)
+    stereo = cv2.StereoBM_create(nD, bS)
+    stereo.setDisp12MaxDiff(25)
+    stereo.setUniquenessRatio(15)
+    start = time.time()
+    disparity = stereo.compute(imgL,imgR)
+    end = time.time()
+    print(f"cal {end - start:.5f} sec")
+    print(f"fps {1/(end - start):.5f} sec")
+    disparity = cv2.normalize(disparity, None, 0, 255, cv2.NORM_MINMAX)
+    disparity = np.uint8(disparity)
+    return disparity
+      
+  def StereoSGBM(imgL,imgR, nD = 16, bS = 15, win_size=3) :
+    imgL = cv2.cvtColor(imgL,cv2.COLOR_RGB2GRAY)
+    imgR = cv2.cvtColor(imgR,cv2.COLOR_RGB2GRAY)
+    stereo = cv2.StereoSGBM_create(
+        numDisparities=nD,
+        blockSize=bS,
+        uniquenessRatio=5,
+        speckleWindowSize=5,
+        speckleRange=5,
+        disp12MaxDiff=25,
+        P1=8 * 3 * win_size ** 2,
+        P2=32 * 3 * win_size ** 2,
+    )
+    start = time.time()
+    disparity = stereo.compute(imgL,imgR)
+    end = time.time()
+    print(f"cal {end - start:.5f} sec")
+    print(f"fps {1/(end - start):.5f} sec")
+    disparity = cv2.normalize(disparity, None, 0, 255, cv2.NORM_MINMAX)
+    disparity = np.uint8(disparity)
+    return disparity
+  
+  def Census_Transform (left, right, window_size = 5, ndisp = 7):
+    left = cv2.cvtColor(left,cv2.COLOR_RGB2GRAY)
+    right = cv2.cvtColor(right,cv2.COLOR_RGB2GRAY)
+    ct_left = norm(transform(left, window_size)) ## Census Transform
+    ct_right = norm(transform(right, window_size))
+    ct_costs = [] ## Result
+    start = time.time()
+    for exponent in range(0, 6):
+        import math
+        disparity = int(ndisp / math.pow(2, exponent))
+        #print(math.pow(2, exponent), disparity)
+        ct_costs.append(norm(cost(left, right, window_size, disparity)))
+    disparity = ct_costs[0].copy()
+    end = time.time()
+    print(f"cal {end - start:.5f} sec")
+    print(f"fps {1/(end - start):.5f} sec")
+    disparity = cv2.normalize(disparity, None, 0, 255, cv2.NORM_MINMAX)
+    disparity = np.uint8(disparity)
+    return disparity
+  ```
+- 이때, 다음과 같이 time을 활용해 FPS를 측정한다.
+  ```python
+      start =time.time()
+      while True: ## 반복문 돌입
+          for item in {"A","B"}:
+              select_channel(item) ## GPIO 출력 설정
+              time.sleep(0.02) ## 0.02초 휴식
+              try:
+                  buf = picam2.capture_array("main",wait=True)
+                  buf = cv2.cvtColor(buf, cv2.COLOR_BGR2RGB)
+                  if item == 'A':
+                      cv2.imshow('A_image', buf)
+                  elif item == 'B':
+                      cv2.imshow('B_image', buf)
+                      endtime = time.time()-start
+                      print("t : ",endtime)
+                      print("FPS = ",1/endtime)
+                      start = time.time()
+                  key = cv2.waitKey(1) & 0xff
+                  if key == 27 :
+                    break
+              except Exception as e:
+                  print("capture_buffer: "+ str(e))
+  ```
+- 다음과 같이 코드를 활용해 StereoVision 이미지를 획득한다.
+  ```python
+      select_channel("A") 
+  	  imageA = picam2.capture_array("main",wait=True)
+      while True: ## 반복문 돌입
+          for item in {"A","B"}:
+              select_channel(item) ## GPIO 출력 설정
+              time.sleep(0.02) ## 0.02초 휴식
+              try:
+                  buf = picam2.capture_array("main",wait=True)
+                  buf = cv2.cvtColor(buf, cv2.COLOR_BGR2RGB)
+                  if item == 'A':
+                      cv2.imshow('A_image', buf)
+                      imageA = buf
+                  elif item == 'B':
+                      cv2.imshow('B_image', buf)
+                      cv2.imshow('stereo',StereoBM(imageA, buf, 16*4, 17))
+                      # cv2.imshow('stereo',StereoSGBM(imageA, buf, 16*4, 17))
+                      # cv2.imshow('stereo',Census_Transform(imageA, buf, 17, 16*4))
+                      endtime = time.time()-start
+                      print("t : ",endtime)
+                      print("FPS = ",1/endtime)
+                      start = time.time()
+                  key = cv2.waitKey(1) & 0xff
+                  if key == 27 :
+                    break
+              except Exception as e:
+                  print("capture_buffer: "+ str(e))
+  ```
+- 다음과 같이 각도를 조절한다.
+  ```python
+  # 생략
+  width = 320
+  height = 240
+  angle = -10
+  M = cv2.getRotationMatrix2D((width / 2, height / 2), angle, 1)
+  # 생략
+  ## Thread 실행시
+  def run():
+      global picam2
+  
+      # 생략
 
+      imageA = picam2.capture_array("main",wait=True)
+      while True:
+          for item in {"A","B"}:
+              select_channel(item)
+              time.sleep(0.002)
+              try:
+                  buf = picam2.capture_array("main",wait=True) 
+                  buf = picam2.capture_array("main",wait=True)
+                  buf = cv2.cvtColor(buf, cv2.COLOR_BGR2RGB)
+                  if item == 'A':                
+                      buf = cv2.warpAffine(buf, M, (width, height))
+                      cv2.imshow('A_image', buf)
+                      imageA = buf.copy()
+                  elif item == 'B':
+                      buf = cv2.warpAffine(buf, M, (width, height))
+                      cv2.imshow('B_image', buf)
+                      cv2.imshow('stereo',StereoBM(imageA, buf))
+      #생략
+  ```
+  <img src="https://user-images.githubusercontent.com/66783849/199503776-6db9c32e-140b-4d72-a65a-429632546459.png" width="450">
+- 이 Stereo Vision Camera에 맞는 Stereo 속성 값을 [예제](https://github.com/SagiK-Repository/StereoVision/tree/main/2%2C%203.%20Image%20StereoVision%20in%20PC%20C%2B%2B%20%26%20Python#-stereobm-stereosgbm)를 통해 얻는다.
 
 <br><br><br>
 
